@@ -1,0 +1,70 @@
+{
+  "method": "1 ms RMS envelope, log, high-passed (2 s), normalised cross-correlation of a window of the reference clip against the target clip; lag = target time - reference time",
+  "pairs": {
+    "k3->k1hq": {
+      "windows": [
+        {
+          "window": "speech before the shot",
+          "ref_s": [
+            23.0,
+            25.5
+          ],
+          "lag_s": -16.879,
+          "z": 8.5
+        },
+        {
+          "window": "the shot and screams",
+          "ref_s": [
+            25.0,
+            26.5
+          ],
+          "lag_s": -21.647,
+          "z": 4.4
+        },
+        {
+          "window": "earlier speech",
+          "ref_s": [
+            20.0,
+            23.0
+          ],
+          "lag_s": -16.874,
+          "z": 8.0
+        }
+      ],
+      "lag_s": -16.879,
+      "lag_window": "speech before the shot",
+      "reaction_ref_s": 25.673333,
+      "predicted_reaction_in_target_s": 8.794,
+      "video_reaction_in_target_s": 8.673333,
+      "video_minus_audio_prediction_s": -0.121
+    },
+    "k3->k2": {
+      "windows": [
+        {
+          "window": "speech before the shot",
+          "ref_s": [
+            22.0,
+            25.5
+          ],
+          "lag_s": -18.986,
+          "z": 4.0
+        },
+        {
+          "window": "the shot and screams",
+          "ref_s": [
+            25.0,
+            26.5
+          ],
+          "lag_s": -24.991,
+          "z": 3.9
+        }
+      ],
+      "lag_s": -18.986,
+      "lag_window": "speech before the shot",
+      "reaction_ref_s": 25.673333,
+      "predicted_reaction_in_target_s": 6.687,
+      "video_reaction_in_target_s": 6.605644,
+      "video_minus_audio_prediction_s": -0.082
+    }
+  }
+}

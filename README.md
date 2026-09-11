@@ -31,7 +31,8 @@ inputs/fetch.sh                                   # ~120 MB from archive.org, ve
 P=.venv/bin/python
 for c in k1hq k1 k2 k3; do $P pipeline/s1_video.py extract --clip $c; done   # frames + audio + timestamps into data/s1/work
 $P pipeline/s1_video.py timing                    # data/s1/timing.json
-$P pipeline/s1_video.py audio                     # data/s1/audio.json, docs/s1/img/audio_*.png
+$P pipeline/s1_video.py audio                     # data/s1/audio.json: impulses around the anchor
+$P pipeline/s1_video.py sync                      # data/s1/sync.json: cross-clip lags vs the video anchors
 $P pipeline/s1_video.py figures --track           # trajectories, motion series and every strip on the study page
 $P pipeline/s1_video.py gifs                      # the looping animations (subject · Kirk · audio timeline)
 python3 -m http.server 4173 --bind 127.0.0.1 --directory docs
@@ -47,7 +48,7 @@ Open `http://127.0.0.1:4173/`. Extracting `2.MOV` at 1080p writes about
 inputs/                       Original supplied material; preserve untouched
   README.md                   Provenance of each clip and what its container says
   fetch.sh, kirkshooting/     Download script and SHA-256 checksums (the videos are not committed)
-pipeline/s1_video.py          extract · timing · audio · track · strip · motion · gridref · figures · gifs
+pipeline/s1_video.py          extract · timing · audio · sync · track · strip · motion · gridref · figures · gifs
 pipeline/assets/              DejaVu Sans for the animation labels, with its licence
 data/s1/                      timing.json, audio.json, traj_*.json, motion_*.csv, motion_summary.json
 research/                     investigations.json, per-study brief and method; s2/astra-package is study 02 as delivered
@@ -58,7 +59,7 @@ docs/                         The site: index.html, style.css, s1/ and s2/ with 
 
 - People in the frames are described by clothing and position only.
 - Times are frame presentation timestamps from the file, relative to the
-  loud transient in that clip's own audio. Frame indices are zero-based.
+  frame in which Kirk visibly moves in that same clip. Frame indices are zero-based.
 - Frames after Kirk is visibly wounded are not published.
 - Every figure on the site is produced by the pipeline from the listed
   inputs; nothing is drawn by hand.

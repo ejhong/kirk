@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Movement and timing · a second review</title>
-<meta name="description" content="Study 02: an independent four-source visual review of the same two gestures, produced with ChatGPT, reproduced here in full with an editor's note on where its timing reference differs from study 01.">
+<meta name="description" content="Study 02: an independent four-source visual review of the same two gestures, produced with ChatGPT, reproduced here in full with an editor's note on how its timing reference compares with study 01.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
 <header class="masthead"><div class="wrap">
   <div class="eyebrow">Study 02 · Independent review · four sources · reproduced</div>
   <h1 style="margin-top:14px">Movement and timing: a second review</h1>
-  <p class="deck">The same two gestures examined separately, with ChatGPT, from the same four files. The review is reproduced here in full and in its own words, followed by an editor's note on the one place where it and <a href="../s1/">study 01</a> disagree: where in each file the shot is.</p>
+  <p class="deck">The same two gestures examined separately, with ChatGPT, from the same four files. The review is reproduced here in full and in its own words, with an editor's note on how its timing reference compares with <a href="../s1/">study 01</a>, which first disputed it and then, after a correction, agreed with it.</p>
   <div class="meta"><span><b>Reviewed</b> 11 September 2026 · v1.0</span><span><b>Method</b> manual frame inspection, scripted extraction</span><span><b>Package</b> <a href="https://github.com/ejhong/kirk/tree/main/research/s2/astra-package">research/s2/astra-package</a></span></div>
 </div></header>
 <nav class="toc" aria-label="On this page"><div class="wrap"><ol>
@@ -28,19 +28,18 @@
   <div class="part-head"><div class="n">Editor's note</div><h2>Where the two studies agree, and where they part</h2></div>
   <div class="two">
   <div class="prose">
-    <p class="lede">The review below was made independently of study 01, by a different model, from the same files. It reaches the same conclusions about what the frames resolve: a hand on a sleeve, an arm that unfolds, no identifiable control, no object followed into a pocket. It reaches a different conclusion about <em>when</em> the sleeve contact happens, and that difference comes from one choice.</p>
-    <p>The review does not use the sound of the shot. It sets its zero at "the first clear abrupt visible movement of Kirk" in each file, chosen by eye, and places that at 8.35 s in <code>2.MOV</code>, 6.31 s in <code>16.mp4</code> and 25.37 s in <code>7.mp4</code>. Study 01 measures the loud transient in each file's own audio track and checks it against Kirk's head in the frames on either side. In <code>2.MOV</code> the transient peaks at 6.42 s (frame 385) and Kirk's microphone hand drops in frames 386 to 390; by 8.35 s (frame 500) he has been slumping for almost two seconds and the crowd around the barrier is already reacting. In <code>16.mp4</code> the transient is at 5.04 s and Kirk's head snaps back at frame 151 (5.21 s), not at 6.31 s. In <code>7.mp4</code> the two references are 0.3 s apart, which changes nothing.</p>
-    <p>With the review's own frame numbers and study 01's zero, the sleeve contact it documents at frames 487 to 492 falls 1.7 to 1.8 s <em>after</em> the transient, not 0.1 to 0.2 s before it. Every other observation in the review stands. The two studies are otherwise in agreement, and the review's package, boards and slowed clips are kept here unchanged so that a reader can check both readings against the frames.</p>
-    <p>What a reader can do in a minute: take the review's own instruction, extract frame 385 and frame 500 of <code>2.MOV</code> without any crop, and look at Kirk and at the people behind the barrier in each.</p>
+    <p class="lede">The review below was made independently of study 01, by a different model, from the same files. It reaches the same conclusions about what the frames resolve: a hand on a sleeve, an arm that unfolds, no identifiable control, no object followed into a pocket. On the order of events it was right first.</p>
+    <p>The review does not use the sound of the shot. It sets its zero at "the first clear abrupt visible movement of Kirk" in each file, chosen by eye: 8.35 s in <code>2.MOV</code>, 6.31 s in <code>16.mp4</code>, 25.37 s in <code>7.mp4</code>. Study 01, in its first version, anchored on the loudest audio transient in each file, which in <code>2.MOV</code> is a crowd burst at 6.42 s, and on that basis faulted this review's zero as 1.9 s late. That was study 01's error, not the review's. Cross-correlating the clips' audio and reading Kirk's head frame by frame put the shot in <code>2.MOV</code> at frame 520, 8.67 s, 0.3 s after the review's marker; in <code>16.mp4</code> at frame 193, 6.61 s, also 0.3 s after; in <code>7.mp4</code> at frame 770, 25.67 s, 0.3 s after. The review's three markers are each about 0.3 s early, consistently, which suggests it bracketed the first small movement rather than the head snap; the order it reports is unaffected.</p>
+    <p>With study 01's V2 zero, the sleeve contact the review documents at frames 487–492 falls 0.45 to 0.55 s before Kirk's head snaps back, and the unfolding it documents at frames 199–202 of <code>16.mp4</code> falls 0.2 to 0.3 s after. The two studies now agree on every frame number and on the order. The review's package, boards and slowed clips are kept here unchanged. An earlier version of this note, which said the review had placed its zero 1.9 s late, is withdrawn; it is preserved in the repository history and described on <a href="../s1/#correction">study 01's correction section</a>.</p>
   </div>
   <aside>
     <div class="dossier">
       <div class="eyebrow">Reference frames, both studies</div>
       <table style="background:transparent;border:0;color:var(--dossier-text)">
-        <tr><th style="background:transparent;color:var(--dossier-faint)">File</th><th style="background:transparent;color:var(--dossier-faint)">Study 02 zero</th><th style="background:transparent;color:var(--dossier-faint)">Study 01 zero</th></tr>
-        <tr><td>2.MOV</td><td>8.35 s · frame 500</td><td>6.42 s · frame 385</td></tr>
-        <tr><td>16.mp4</td><td>6.31 s · frame 183</td><td>5.04 s · frame 145 (head 151)</td></tr>
-        <tr><td>7.mp4</td><td>25.37 s · frame 760</td><td>25.70 s · frame 770</td></tr>
+        <tr><th style="background:transparent;color:var(--dossier-faint)">File</th><th style="background:transparent;color:var(--dossier-faint)">Study 02 zero</th><th style="background:transparent;color:var(--dossier-faint)">Study 01 V2 zero</th></tr>
+        <tr><td>2.MOV</td><td>8.35 s · frame 500</td><td>8.67 s · frame 520</td></tr>
+        <tr><td>16.mp4</td><td>6.31 s · frame 183</td><td>6.61 s · frame 193</td></tr>
+        <tr><td>7.mp4</td><td>25.37 s · frame 760</td><td>25.67 s · frame 770</td></tr>
       </table>
       <p style="margin-top:12px"><a href="../s1/#timezero">How study 01 fixes its zero →</a></p>
     </div>
@@ -56,7 +55,7 @@
     <p>This is an exploratory visual review of specific files. It does not authenticate the recordings, identify the men, establish their employment, or determine criminal involvement. The conclusions below are manual visual judgments, not results from a trained action-detection model or a blinded study.</p>
   </div>
   <div class="stats">
-    <div class="stat"><div class="num">Contact before the event</div><div class="lbl">The clearer 2.MOV supports the timing part of the sleeve observation. (See the editor's note above.)</div></div>
+    <div class="stat"><div class="num">Contact before the event</div><div class="lbl">The clearer 2.MOV supports the timing part of the sleeve observation.</div></div>
     <div class="stat"><div class="num">Mechanism unresolved</div><div class="lbl">No identifiable control or visibly depressed button can be resolved at the contact.</div></div>
     <div class="stat"><div class="num">Unfolding after the event</div><div class="lbl">In kirk2.mp4, clear hand emergence follows Kirk's visible reaction by about half a second.</div></div>
   </div>

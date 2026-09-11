@@ -6,7 +6,8 @@ produced by `figures`, every number by `timing`, `audio` and `motion`.
 
     extract  pull every frame (PNG) and the audio track (WAV) out of a clip
     timing   per-frame timestamps: frame-rate constancy, duplicates, cuts
-    audio    locate the loud transient, plot the waveform, look for a second impulse
+    audio    impulses in each clip's audio around Kirk's visible movement, with plots
+    sync     align the clips by cross-correlating their audio; check the video anchors
     track    follow one person with normalised cross-correlation (a template tracker)
     strip    stabilised per-frame crops laid out as a film strip, labelled in ms
     motion   mean absolute frame-to-frame change inside a tracked region, plotted
@@ -46,10 +47,24 @@ CLIPS = {
     "k3": {"file": "7.mp4", "label": "7.mp4", "fps": 30000 / 1001},
 }
 
-# t = 0 reference per clip: the peak of the loud transient (seconds into the
-# clip's audio track), as measured by `audio`. Kept here so that `strip`,
-# `motion` and `figures` label frames consistently.
-T0 = {"k1hq": 6.4189, "k1": 6.4189, "k2": 5.0370, "k3": 25.6980}
+# t = 0 reference per clip: the first frame in which Kirk visibly moves in
+# response to the shot (head snaps back), read from the frames themselves.
+# This is a video-only anchor; the audio impulses are reported relative to it.
+# V1 of this study anchored on the loudest audio transient in each file, which
+# in 2.MOV (6.42 s) was crowd noise, not the shot; see data/s1/sync.json.
+REACTION = {"k1hq": 520, "k1": 520, "k2": 193, "k3": 770}
+
+
+def T0_of(clip):
+    return pts(clip)[REACTION[clip]]
+
+
+class _T0(dict):
+    def __getitem__(self, clip):
+        return T0_of(clip)
+
+
+T0 = _T0()
 
 # Erebus palette (docs/style.css)
 INK, INK_SOFT, LINE, STEEL, INDIGO, DOSSIER = "#121a24", "#3b4759", "#c2cfe0", "#3a6ea8", "#5c64a0", "#0d141d"
@@ -151,6 +166,7 @@ def cmd_timing(a):
 
 # --------------------------------------------------------------------------- audio
 def cmd_audio(a):
+    """Impulses in each clip's audio within 1.5 s of Kirk's visible movement, and a figure per clip."""
     import numpy as np
     from scipy.io import wavfile
     import matplotlib
@@ -162,60 +178,116 @@ def cmd_audio(a):
     for clip in ("k1hq", "k1", "k2", "k3"):
         sr, x = wavfile.read(WORK / "audio" / f"{clip}.wav")
         x = x.astype(np.float32) / 32768
-        win = int(sr * 0.005)
-        n = len(x) // win
-        env5 = np.sqrt((x[: n * win].reshape(n, win) ** 2).mean(1))
-        t5 = np.arange(n) * win / sr
-        pk = float(t5[env5.argmax()])
-        # refine on a 1 ms envelope around the coarse peak
-        seg0 = max(0, int((pk - 0.06) * sr))
-        seg = x[seg0: int((pk + 0.7) * sr)]
+        P = pts(clip)
+        t0 = P[REACTION[clip]]
+        seg0 = max(0, int((t0 - 1.5) * sr))
+        seg = x[seg0: int((t0 + 1.0) * sr)]
         w = int(sr * 0.001)
         m = len(seg) // w
         e = np.sqrt((seg[: m * w].reshape(m, w) ** 2).mean(1))
         t = np.arange(m) * w / sr + seg0 / sr
-        base = float(np.sqrt((x[int((pk - 1.05) * sr): int((pk - 0.1) * sr)] ** 2).mean()))
-        peak_t, peak_v = float(t[e.argmax()]), float(e.max())
-        onset = float(t[np.where(e > 0.2 * e.max())[0][0]])
-        later = []
+        base = float(np.median(e))  # robust: the median 1 ms level of the 2.5 s window
+        imp = []
         for j in range(1, m - 1):
-            if e[j] > e[j - 1] and e[j] >= e[j + 1] and e[j] > 4 * base and t[j] > peak_t + 0.06:
-                if not later or t[j] - later[-1][0] > 0.04:
-                    later.append((float(t[j]), float(e[j])))
-        fps = CLIPS[clip]["fps"]
-        P = pts(clip)
-        frame_at = lambda s: int(max(i for i in range(len(P)) if P[i] <= s))
+            if e[j] > e[j - 1] and e[j] >= e[j + 1] and e[j] > 4 * base:
+                if not imp or t[j] - imp[-1][0] > 0.06:
+                    imp.append((float(t[j]), float(e[j])))
+                elif e[j] > imp[-1][1]:
+                    imp[-1] = (float(t[j]), float(e[j]))
+        frame_at = lambda s_: int(max(i for i in range(len(P)) if P[i] <= s_))
         res[clip] = {
-            "sample_rate": int(sr), "baseline_rms_1s_before": base, "onset_s": onset, "peak_s": peak_t,
-            "peak_rms_1ms": peak_v, "peak_over_baseline_db": float(20 * np.log10(peak_v / base)),
-            "onset_frame": frame_at(onset), "peak_frame": frame_at(peak_t),
-            "later_impulses": [{"t_after_peak_s": round(tt - peak_t, 4), "rms": round(vv, 4)} for tt, vv in later[:8]],
+            "reaction_frame": REACTION[clip], "reaction_pts_s": t0, "baseline_rms": base,
+            "impulses": [{"t_s": round(tt, 4), "t_rel_s": round(tt - t0, 4), "frame": frame_at(tt), "rms": round(vv, 4),
+                          "db_over_baseline": round(float(20 * np.log10(vv / base)), 1)} for tt, vv in imp],
             "clip_abs_max_sample": float(np.abs(x).max()),
         }
-        print(clip, {k: res[clip][k] for k in ("onset_s", "peak_s", "onset_frame", "peak_frame", "peak_over_baseline_db", "later_impulses")})
-        # figure
+        print(clip, "reaction f", REACTION[clip], f"{t0:.3f}s", "impulses:", [(i_["t_rel_s"], i_["frame"], i_["db_over_baseline"]) for i_ in res[clip]["impulses"]])
         fig, ax = plt.subplots(2, 1, figsize=(10.5, 4.6), dpi=130, facecolor="white")
         ts = np.arange(len(seg)) / sr + seg0 / sr
-        ax[0].plot(ts, seg, lw=0.35, color=STEEL)
+        ax[0].plot(ts - t0, seg, lw=0.35, color=STEEL)
         ax[0].set_ylabel("amplitude")
-        ax[1].plot(t, 20 * np.log10(e / base + 1e-9), lw=0.8, color=INK)
-        ax[1].set_ylabel("dB above 1 s baseline")
-        ax[1].set_xlabel(f"seconds into {CLIPS[clip]['label']}")
+        ax[1].plot(t - t0, 20 * np.log10(e / base + 1e-9), lw=0.8, color=INK)
+        ax[1].set_ylabel("dB above baseline")
+        ax[1].set_xlabel(f"seconds relative to Kirk's first visible movement (frame {REACTION[clip]} of {CLIPS[clip]['label']})")
         for k in range(len(P)):
             if ts[0] <= P[k] <= ts[-1]:
                 for a_ in ax:
-                    a_.axvline(P[k], color=LINE, lw=0.5, zorder=0)
+                    a_.axvline(P[k] - t0, color=LINE, lw=0.4, zorder=0)
         for a_ in ax:
-            a_.axvline(onset, color=INDIGO, ls="--", lw=0.9)
-            a_.set_xlim(ts[0], ts[-1])
-            for s in ("top", "right"):
-                a_.spines[s].set_visible(False)
-        ax[0].set_title(f"{CLIPS[clip]['label']}: waveform and 1 ms envelope · frame boundaries in pale blue · onset dashed",
+            a_.axvline(0, color=INDIGO, ls="--", lw=1)
+            a_.set_xlim(ts[0] - t0, ts[-1] - t0)
+            for s_ in ("top", "right"):
+                a_.spines[s_].set_visible(False)
+        ax[0].set_title(f"{CLIPS[clip]['label']}: waveform and 1 ms envelope, 1.5 s before to 1 s after Kirk moves · frame boundaries in pale blue",
                         loc="left", fontsize=9.5, color=INK_SOFT)
         fig.tight_layout()
         fig.savefig(IMG / f"audio_{clip}.png")
         plt.close(fig)
     (DATA / "audio.json").write_text(json.dumps(res, indent=2))
+
+
+# --------------------------------------------------------------------------- sync
+def cmd_sync(a):
+    """Align the clips to each other by cross-correlating their audio envelopes, and check the video anchors against it."""
+    import numpy as np
+    from scipy.io import wavfile
+    from scipy.signal import correlate
+    from scipy.ndimage import uniform_filter1d
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    def env(clip):
+        sr, x = wavfile.read(WORK / "audio" / f"{clip}.wav")
+        x = x.astype(np.float32) / 32768
+        w = sr // 1000
+        m = len(x) // w
+        return np.sqrt((x[: m * w].reshape(m, w) ** 2).mean(1))
+
+    E = {c: env(c) for c in ("k1hq", "k2", "k3")}
+    L = {c: np.log(E[c] + 1e-4) - uniform_filter1d(np.log(E[c] + 1e-4), 2000) for c in E}
+
+    def lag(ref, lo, hi, tgt, tlo, thi):
+        seg = L[ref][lo:hi]
+        c = correlate(L[tgt][tlo:thi], seg, mode="valid", method="fft")
+        i = int(np.argmax(c))
+        return (tlo + i - lo) / 1000, float((c[i] - c.mean()) / c.std())
+
+    out = {"method": "1 ms RMS envelope, log, high-passed (2 s), normalised cross-correlation of a window of the reference clip against the target clip; lag = target time - reference time",
+           "pairs": {}}
+    for ref, tgt, wins, trange in (("k3", "k1hq", [(23000, 25500, "speech before the shot"), (25000, 26500, "the shot and screams"), (20000, 23000, "earlier speech")], (0, 36000)),
+                                   ("k3", "k2", [(22000, 25500, "speech before the shot"), (25000, 26500, "the shot and screams")], (0, 10000))):
+        rows = []
+        for lo, hi, what in wins:
+            lg, z = lag(ref, lo, hi, tgt, *trange)
+            rows.append({"window": what, "ref_s": [lo / 1000, hi / 1000], "lag_s": round(lg, 3), "z": round(z, 1)})
+        best = max(rows, key=lambda r: r["z"])
+        med = float(best["lag_s"])  # the window with the strongest correlation (speech, not screams)
+        Pr, Pt = pts(ref), pts(tgt)
+        pred = Pr[REACTION[ref]] + med
+        out["pairs"][f"{ref}->{tgt}"] = {"windows": rows, "lag_s": med, "lag_window": best["window"],
+                                         "reaction_ref_s": Pr[REACTION[ref]], "predicted_reaction_in_target_s": round(pred, 3),
+                                         "video_reaction_in_target_s": Pt[REACTION[tgt]],
+                                         "video_minus_audio_prediction_s": round(Pt[REACTION[tgt]] - pred, 3)}
+        print(ref, "->", tgt, rows, "median lag", med, "predicted", round(pred, 3), "video anchor", Pt[REACTION[tgt]])
+    (DATA / "sync.json").write_text(json.dumps(out, indent=2))
+    # figure: the three envelopes on one axis, zero at Kirk's movement in each clip
+    fig, ax = plt.subplots(3, 1, figsize=(10.5, 6.2), dpi=130, facecolor="white", sharex=True)
+    for a_, clip in zip(ax, ("k1hq", "k3", "k2")):
+        P = pts(clip)
+        t0 = P[REACTION[clip]]
+        t = np.arange(len(E[clip])) / 1000 - t0
+        a_.fill_between(t, 0, E[clip], color=STEEL, lw=0)
+        a_.axvline(0, color=INDIGO, ls="--", lw=1)
+        a_.set_ylabel("RMS")
+        a_.set_title(f"{CLIPS[clip]['label']} · zero = Kirk's first visible movement, frame {REACTION[clip]} ({t0:.2f} s)", loc="left", fontsize=9, color=INK_SOFT)
+        for s_ in ("top", "right"):
+            a_.spines[s_].set_visible(False)
+    ax[-1].set_xlim(-3.5, 2.0)
+    ax[-1].set_xlabel("seconds relative to Kirk's first visible movement")
+    fig.tight_layout()
+    fig.savefig(IMG / "audio_sync.png")
+    plt.close(fig)
 
 
 # --------------------------------------------------------------------------- track
@@ -295,8 +367,8 @@ def strip(clip, traj, start, end, step, box, scale, cols, out, quality=88):
         ms = t_rel(clip, i, P) * 1000
         bar = np.full((22, c.shape[1], 3), (29, 20, 13), np.uint8)  # dossier blue-black, BGR
         col = (160, 172, 216) if ms < 0 else (216, 172, 133)
-        if P[i] <= T0[clip] < (P[i + 1] if i + 1 < len(P) else P[i] + 1 / CLIPS[clip]["fps"]):
-            col = (60, 60, 230)  # the frame whose interval contains the transient peak
+        if i == REACTION[clip]:
+            col = (60, 60, 230)  # the frame in which Kirk first visibly moves
         cv2.putText(bar, f"{i}  {ms:+.0f} ms", (4, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.46, col, 1, cv2.LINE_AA)
         ims.append(np.vstack([bar, c]))
     rows = [np.hstack(ims[i: i + cols]) for i in range(0, len(ims), cols)]
@@ -360,8 +432,8 @@ def motion(clip, traj, start, end, region, control, name, title, xlim=None):
     fig, ax = plt.subplots(figsize=(10.5, 3.3), dpi=130, facecolor="white")
     ax.fill_between(t, 0, cm, color=LINE, lw=0, label="control region")
     ax.plot(t, hm, color=STEEL, lw=1.0, label="region of interest")
-    ax.axvline(0, color=INDIGO, ls="--", lw=1, label="audio transient peak")
-    ax.set_xlabel("seconds relative to the audio transient")
+    ax.axvline(0, color=INDIGO, ls="--", lw=1, label="Kirk's first visible movement")
+    ax.set_xlabel("seconds relative to Kirk's first visible movement")
     ax.set_ylabel("mean |Δ| between frames")
     ax.set_title(title, loc="left", fontsize=10, color=INK_SOFT)
     ax.legend(frameon=False, fontsize=8, loc="upper left")
@@ -429,27 +501,30 @@ MOTION = [
 ]
 
 STRIPS = [
-    # out, clip, traj, start, end, step, box (rel.), scale, cols
+    # out, clip, traj, start, end, step, box (rel.), scale, cols (ignored: published strips are single rows)
     ("k1polo_ear.jpg", "k1hq", "k1polo", 212, 264, 2, (60, 40, 330, 460), 0.62, 13),
-    ("k1polo_shot.jpg", "k1hq", "k1polo", 300, 440, 4, (-20, -40, 330, 460), 0.5, 12),
+    ("k1polo_shot.jpg", "k1hq", "k1polo", 440, 584, 4, (-20, -40, 330, 460), 0.5, 12),
     ("k3polo_shot.jpg", "k3", "k3polo", 680, 772, 4, (-40, -40, 90, 150), 2.2, 12),
-    ("k1tan_shot.jpg", "k1hq", "k1tan", 340, 430, 2, (-20, -80, 320, 240), 0.8, 9),
-    ("k1tan_hands.jpg", "k1hq", "k1tan", 200, 400, 4, (-20, -80, 320, 240), 0.8, 10),
-    ("k1tan_sleeve.jpg", "k1hq", "k1tan", 466, 572, 2, (-20, -80, 320, 240), 1.0, 9),
-    ("k1tan_sleeve_zoom.jpg", "k1hq", "k1tan", 484, 520, 1, (120, -50, 310, 170), 2.2, 9),
-    ("k1_kirk_state.jpg", "k1hq", None, 370, 580, 10, (0, 300, 1080, 1300), 0.36, 11),
-    ("k2_kirk_state.jpg", "k2", None, 140, 218, 3, (150, 400, 700, 760), 0.9, 9),
-    ("k2blue_after.jpg", "k2", "k2blue", 150, 216, 2, (-30, -25, 140, 175), 2.0, 11),
-    ("k3blue_fist.jpg", "k3", "k3blue", 776, 812, 2, (-10, -10, 60, 100), 5.0, 9),
+    ("k1tan_early.jpg", "k1hq", "k1tan", 200, 344, 4, (-20, -80, 320, 240), 0.8, 10),
+    ("k1tan_hands.jpg", "k1hq", "k1tan", 340, 484, 4, (-20, -80, 320, 240), 0.8, 10),
+    ("k1tan_shot.jpg", "k1hq", "k1tan", 470, 562, 2, (-20, -80, 320, 240), 0.9, 9),
+    ("k1tan_sleeve_zoom.jpg", "k1hq", "k1tan", 484, 532, 1, (120, -50, 310, 170), 2.2, 9),
+    ("k1_kirk_state.jpg", "k1hq", None, 440, 640, 10, (0, 300, 1080, 1300), 0.36, 11),
+    ("k1_B_foreground.jpg", "k1hq", None, 500, 566, 3, (560, 900, 1080, 1500), 0.55, 11),
+    ("k2_kirk_state.jpg", "k2", None, 170, 230, 3, (150, 400, 700, 760), 0.9, 9),
     ("k3blue_shot.jpg", "k3", "k3blue", 745, 777, 1, (-10, -20, 80, 120), 3.0, 8),
+    ("k3blue_pocket.jpg", "k3", "k3blue", 748, 784, 1, (-12, 35, 48, 100), 7.0, 12),
     ("k3blue_turn.jpg", "k3", "k3blue", 664, 700, 2, (-10, -20, 80, 120), 2.4, 9),
     ("k3blue_baseline.jpg", "k3", "k3blue", 241, 745, 8, (-40, -60, 110, 150), 1.6, 12),
     ("k3blue_after.jpg", "k3", "k3blue", 770, 812, 2, (-70, -40, 70, 200), 1.6, 11),
     ("k3blue_unfold.jpg", "k3", "k3blue", 766, 780, 1, (-15, 25, 60, 110), 5.0, 7),
-    ("k2blue_shot.jpg", "k2", "k2blue", 130, 175, 1, (-10, -10, 100, 150), 3.0, 9),
+    ("k3blue_fist.jpg", "k3", "k3blue", 772, 812, 2, (-10, -10, 60, 100), 5.0, 9),
+    ("k2blue_shot.jpg", "k2", "k2blue", 170, 216, 1, (-10, -10, 100, 150), 3.0, 9),
+    ("k2blue_pocket.jpg", "k2", "k2blue", 176, 210, 1, (-5, 50, 70, 125), 5.0, 10),
     ("k2blue_baseline.jpg", "k2", "k2blue", 0, 206, 4, (-30, -25, 110, 165), 2.0, 13),
-    ("k1_reaction.jpg", "k1hq", None, 379, 392, 1, (100, 640, 500, 1040), 0.6, 13),
-    ("k2_reaction.jpg", "k2", None, 146, 156, 1, (430, 520, 560, 660), 2.5, 10),
+    ("k2blue_after.jpg", "k2", "k2blue", 190, 228, 1, (-30, -25, 140, 175), 2.0, 11),
+    ("k1_reaction.jpg", "k1hq", None, 512, 528, 1, (120, 400, 520, 800), 0.7, 13),
+    ("k2_reaction.jpg", "k2", None, 187, 200, 1, (430, 500, 580, 680), 2.0, 10),
     ("k3_reaction.jpg", "k3", None, 764, 775, 1, (1000, 540, 1130, 700), 2.2, 11),
 ]
 
@@ -515,9 +590,9 @@ def audio_context():
     P = pts("k1hq")
     fig, ax = plt.subplots(figsize=(10.5, 3.4), dpi=130, facecolor="white")
     ax.fill_between(t, 0, e, color=STEEL, lw=0)
-    marks = [(T0["k1hq"], "audio transient\n6.42 s · frame 385", INDIGO), (P[390], "Kirk's microphone\nhand drops · frame 390", INK),
-             (P[440], "crowd begins\nto react · ~frame 440", INK_SOFT), (P[490], "plaid man's right hand\nrises · frame 490", "#8a4b3a"),
-             (P[496], "hand on the left\nsleeve · frame 496", "#8a4b3a")]
+    marks = [(P[385], "loud crowd burst\n6.42 s · frame 385 (V1's mistaken zero)", INK_SOFT), (P[490], "plaid man's right hand\nrises · frame 490", "#8a4b3a"),
+             (P[496], "hand on the left\nsleeve · frame 496", "#8a4b3a"), (P[520], "Kirk's head snaps\nback · frame 520", INDIGO),
+             (P[548], "blue-shirt man's fist\nrises (foreground) · frame 548", INK)]
     for i, (tt, lab, col) in enumerate(marks):
         ax.axvline(tt, color=col, ls="--" if i == 0 else ":", lw=1)
         ax.text(tt + 0.03, e.max() * (0.95 - 0.16 * (i % 3)), lab, fontsize=7.5, color=col, va="top")
@@ -525,7 +600,7 @@ def audio_context():
     ax.set_ylim(0, e.max() * 1.05)
     ax.set_xlabel("seconds into 2.MOV")
     ax.set_ylabel("2 ms RMS")
-    ax.set_title("2.MOV: the transient, Kirk's reaction, the crowd, and the sleeve touch on one time axis", loc="left", fontsize=10, color=INK_SOFT)
+    ax.set_title("2.MOV, 5.5–9.5 s: the sleeve touch, Kirk's reaction and the audio on one time axis", loc="left", fontsize=10, color=INK_SOFT)
     for sp_ in ("top", "right"):
         ax.spines[sp_].set_visible(False)
     fig.tight_layout()
@@ -559,24 +634,33 @@ FONT_CANDIDATES = [ROOT / "pipeline" / "assets" / "DejaVuSans.ttf", Path("/Syste
 GIFS = [
     # out, clip, traj, start, end, step, subject box (rel.), subject label, kirk box (abs), kirk blackout frame or None,
     # playback fps, phases [(frame, caption)]
-    ("k1tan.gif", "k1hq", "k1tan", 330, 580, 3, (-30, -80, 320, 240), "A · plaid shirt, stabilised",
+    ("k1tan.gif", "k1hq", "k1tan", 440, 600, 2, (-30, -80, 320, 240), "A · plaid shirt, stabilised",
      (120, 400, 520, 900), None, 10, [
-         (330, "forearms crossed on the barrier"), (385, "audio transient · Kirk's microphone drops"),
-         (430, "arms unchanged, watching Kirk"), (490, "right hand rises to the left upper arm"),
-         (498, "hand on the left sleeve; fingers reposition")]),
-    ("k1polo.gif", "k1hq", "k1polo", 200, 440, 3, (-20, -40, 330, 460), "A2 · white polo, stabilised",
+         (440, "both hands on the barrier rail"), (490, "right hand rises across the chest"),
+         (496, "index finger on the left sleeve"), (520, "Kirk's head snaps back"), (534, "Kirk's hands rise; hand stays on the sleeve"),
+         (556, "fingers curl; crowd ducks")]),
+    ("k1polo.gif", "k1hq", "k1polo", 420, 600, 3, (-20, -40, 330, 460), "A2 · white polo, stabilised",
      (120, 400, 520, 900), None, 10, [
-         (200, "phone held at the right ear"), (217, "fingers to the right ear"), (251, "phone taken from the ear"),
-         (270, "phone held at the left shoulder"), (385, "audio transient · Kirk's microphone drops"),
-         (400, "phone still at the shoulder")]),
+         (420, "phone held at the left shoulder"), (520, "Kirk's head snaps back"), (560, "phone lowered")]),
     ("k3blue.gif", "k3", "k3blue", 730, 812, 1, (-10, -20, 80, 120), "B · blue shirt, stabilised",
      (1000, 540, 1130, 700), 778, 8, [
-         (730, "arms folded, right hand under the left arm"), (770, "audio transient · Kirk's head jerks"),
-         (777, "right hand emerges, rises to the chin"), (790, "turns toward Kirk")]),
-    ("k2blue.gif", "k2", "k2blue", 120, 216, 1, (-30, -25, 140, 175), "B · blue shirt, stabilised",
+         (730, "arms folded, right hand under the left arm"), (766, "Kirk's hand rises in front of the fold"),
+         (770, "Kirk's head snaps back"), (773, "right hand emerges as a fist"), (790, "turns toward Kirk")]),
+    ("k2blue.gif", "k2", "k2blue", 150, 226, 1, (-30, -25, 140, 175), "B · blue shirt, stabilised",
      (430, 520, 560, 660), None, 8, [
-         (120, "arms folded, seen from behind"), (145, "audio transient"), (151, "Kirk's head jerks back"),
-         (198, "turns and unfolds; hands go down"), (206, "steps toward Kirk")]),
+         (150, "arms folded, seen from behind"), (193, "Kirk's head snaps back"), (198, "turns and unfolds; hands go down"),
+         (206, "steps toward Kirk")]),
+]
+
+# Close-up loops: nothing on the frame but the subject; a thin timeline underneath with one mark, the frame in which Kirk visibly moves.
+CLOSEUPS = [
+    # out, clip, traj, start, end, box (rel.), scale, playback fps
+    ("closeup_plaid.gif", "k1hq", "k1tan", 478, 560, (30, -60, 310, 220), 1.15, 15),
+    ("closeup_plaid_sleeve.gif", "k1hq", "k1tan", 484, 540, (120, -50, 310, 170), 2.0, 12),
+    ("closeup_blue_front.gif", "k3", "k3blue", 748, 792, (-10, -20, 80, 120), 3.2, 8),
+    ("closeup_blue_pocket.gif", "k3", "k3blue", 748, 784, (-12, 35, 48, 100), 6.5, 6),
+    ("closeup_blue_back.gif", "k2", "k2blue", 172, 222, (-30, -25, 140, 175), 2.2, 8),
+    ("closeup_blue_back_pocket.gif", "k2", "k2blue", 176, 212, (-5, 50, 70, 125), 5.0, 6),
 ]
 
 
@@ -637,7 +721,7 @@ def gif(out, clip, traj, start, end, step, sbox, slabel, kbox, kblack, fps_play,
         d = ImageDraw.Draw(canvas)
         # header
         d.text((10, 8), f"{CLIPS[clip]['label']} · frame {i}", font=f_mid, fill=faint)
-        tcol = amber if abs(ms) < 1000 / CLIPS[clip]["fps"] * step else (white if ms >= 0 else (160, 172, 216))
+        tcol = amber if i == REACTION[clip] else (white if ms >= 0 else (160, 172, 216))
         d.text((W // 2, 6), f"{ms:+.0f} ms", font=f_big, fill=tcol, anchor="mt")
         # panel labels
         d.rectangle((0, top + H - 24, sub.shape[1], top + H), fill=(13, 20, 29))
@@ -658,7 +742,7 @@ def gif(out, clip, traj, start, end, step, sbox, slabel, kbox, kblack, fps_play,
         d.polygon(pts_poly, fill=steel)
         x0 = int((0 - t_lo) / (t_hi - t_lo) * (W - 1))
         d.line((x0, ty0, x0, ty1), fill=indigo, width=2)
-        d.text((x0 + 4, ty0 + 2), "transient", font=f_small, fill=(160, 172, 216))
+        d.text((x0 + 4, ty0 + 2), "Kirk moves", font=f_small, fill=(160, 172, 216))
         for tick in np.arange(np.ceil(t_lo * 2) / 2, t_hi, 0.5):
             xt = int((tick - t_lo) / (t_hi - t_lo) * (W - 1))
             d.line((xt, ty1, xt, ty1 + 5), fill=faint)
@@ -666,7 +750,7 @@ def gif(out, clip, traj, start, end, step, sbox, slabel, kbox, kblack, fps_play,
         xc = int((ms / 1000 - t_lo) / (t_hi - t_lo) * (W - 1))
         d.line((xc, ty0 - 4, xc, ty1 + 4), fill=amber, width=3)
         arr = np.array(canvas)
-        hold = 6 if abs(ms) < 1000 / CLIPS[clip]["fps"] * step else 1
+        hold = 6 if i == REACTION[clip] else 1
         frames.extend([arr] * hold)
     frames.extend([frames[-1]] * 8)
     tmp = Path(tempfile.mkdtemp())
@@ -686,12 +770,70 @@ def gif(out, clip, traj, start, end, step, sbox, slabel, kbox, kblack, fps_play,
     print(out.name, len(frames), "frames", f"gif {out.stat().st_size / 1e6:.1f} MB", f"mp4 {out.with_suffix('.mp4').stat().st_size / 1e6:.2f} MB")
 
 
+def closeup(out, clip, traj, start, end, box, scale, fps_play):
+    """A loop of the subject alone. The only annotation is a timeline under the frame with a mark at Kirk's first visible movement."""
+    import cv2
+    import numpy as np
+    from PIL import Image, ImageDraw
+    import tempfile
+
+    T = load_traj(traj)
+    P = pts(clip)
+    r = REACTION[clip]
+    f_small = _font(12)
+    frames = []
+    idx = [i for i in range(start, end) if i in T]
+    for i in idx:
+        im = cv2.imread(str(frame_path(clip, i)))
+        if im is None:
+            continue
+        c = crop_rel(im, T[i][0], T[i][1], box)
+        c = cv2.resize(c, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
+        W, H = c.shape[1], c.shape[0]
+        bar = 34
+        canvas = Image.new("RGB", (W, H + bar), (13, 20, 29))
+        canvas.paste(Image.fromarray(cv2.cvtColor(c, cv2.COLOR_BGR2RGB)), (0, 0))
+        d = ImageDraw.Draw(canvas)
+        # timeline: start..end mapped to the width; mark at the reaction frame; cursor at the current frame
+        xr = int((P[r] - P[idx[0]]) / (P[idx[-1]] - P[idx[0]]) * (W - 1))
+        xc = int((P[i] - P[idx[0]]) / (P[idx[-1]] - P[idx[0]]) * (W - 1))
+        d.line((0, H + 12, W, H + 12), fill=(37, 50, 71), width=2)
+        d.line((xr, H + 3, xr, H + 21), fill=(92, 100, 160), width=3)
+        d.text((min(max(xr + 5, 2), W - 70), H + 20), "Kirk moves", font=f_small, fill=(160, 172, 216))
+        d.line((xc, H + 5, xc, H + 19), fill=(216, 172, 133), width=3)
+        ms = (P[i] - P[r]) * 1000
+        d.text((4, H + 20), f"{ms:+.0f} ms", font=f_small, fill=(216, 172, 133) if i == r else (128, 147, 171))
+        if i == r:
+            d.rectangle((0, 0, W - 1, H - 1), outline=(92, 100, 160), width=4)
+        arr = np.array(canvas)
+        frames.extend([arr] * (4 if i == r else 1))
+    frames.extend([frames[-1]] * 4)
+    tmp = Path(tempfile.mkdtemp())
+    for k, fr in enumerate(frames):
+        Image.fromarray(fr).save(tmp / f"g{k:04d}.png")
+    out = Path(out)
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", str(fps_play), "-i", str(tmp / "g%04d.png"),
+                    "-vf", "split[a][b];[a]palettegen=max_colors=128:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle",
+                    "-loop", "0", str(out)], check=True)
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", str(fps_play), "-i", str(tmp / "g%04d.png"),
+                    "-vf", "pad=ceil(iw/2)*2:ceil(ih/2)*2", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20", "-preset", "slow",
+                    "-movflags", "+faststart", str(out.with_suffix(".mp4"))], check=True)
+    for f in tmp.glob("*.png"):
+        f.unlink()
+    tmp.rmdir()
+    print(out.name, len(frames), "frames", f"gif {out.stat().st_size / 1e6:.1f} MB", f"mp4 {out.with_suffix('.mp4').stat().st_size / 1e6:.2f} MB")
+
+
 def cmd_gifs(a):
     IMG.mkdir(parents=True, exist_ok=True)
     for spec in GIFS:
         if a.only and spec[0] != a.only:
             continue
         gif(IMG / spec[0], *spec[1:])
+    for spec in CLOSEUPS:
+        if a.only and spec[0] != a.only:
+            continue
+        closeup(IMG / spec[0], *spec[1:])
 
 
 # --------------------------------------------------------------------------- main
@@ -701,6 +843,7 @@ def main(argv=None):
     s = sp.add_parser("extract"); s.add_argument("--clip", required=True, choices=CLIPS); s.add_argument("--start", type=int); s.add_argument("--end", type=int); s.set_defaults(f=cmd_extract)
     s = sp.add_parser("timing"); s.set_defaults(f=cmd_timing)
     s = sp.add_parser("audio"); s.set_defaults(f=cmd_audio)
+    s = sp.add_parser("sync"); s.set_defaults(f=cmd_sync)
     s = sp.add_parser("track"); s.add_argument("--clip", required=True, choices=CLIPS); s.add_argument("--start", type=int, required=True); s.add_argument("--end", type=int, required=True); s.add_argument("--back", type=int); s.add_argument("--box", type=int, nargs=4, required=True); s.add_argument("--search", type=int, default=40); s.add_argument("--name", required=True); s.set_defaults(f=cmd_track)
     s = sp.add_parser("strip"); s.add_argument("--clip", required=True, choices=CLIPS); s.add_argument("--traj"); s.add_argument("--start", type=int, required=True); s.add_argument("--end", type=int, required=True); s.add_argument("--step", type=int, default=1); s.add_argument("--box", type=int, nargs=4, required=True); s.add_argument("--scale", type=float, default=1.0); s.add_argument("--cols", type=int, default=10); s.add_argument("--out", required=True); s.set_defaults(f=cmd_strip)
     s = sp.add_parser("motion"); s.add_argument("--clip", required=True, choices=CLIPS); s.add_argument("--traj", required=True); s.add_argument("--start", type=int, required=True); s.add_argument("--end", type=int, required=True); s.add_argument("--region", type=int, nargs=4, required=True); s.add_argument("--control", type=int, nargs=4, required=True); s.add_argument("--name", required=True); s.add_argument("--title", default=""); s.set_defaults(f=cmd_motion)

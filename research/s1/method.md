@@ -28,17 +28,29 @@ Decisions taken from the result:
 
 ## 2. Time zero
 
-`pipeline/s1_video.py audio` finds the loud transient in each clip: the 5 ms
-RMS peak of the mono track, refined on a 1 ms envelope; the onset is the
-first 1 ms window above 20 % of the peak envelope; later impulses are local
-maxima above four times the 1 s pre-shot baseline. The transient's peak is
-t = 0 for every figure. Kirk's first visible head movement is read from
-per-frame crops and reported relative to it. A supersonic bullet's crack
-arrives at a camera near the target roughly when the bullet does; the muzzle
-report arrives later by (distance ÷ speed of sound − distance ÷ bullet
-speed). Neither the camera positions nor the audio offsets are known well
-enough to turn that into a distance; the second impulse in `7.mp4` is
-reported, not interpreted.
+t = 0 in each clip is the first frame in which Kirk's head visibly snaps back,
+read by eye from per-frame crops and recorded in `REACTION` in the script:
+2.MOV frame 520 (8.673 s), 16.mp4 frame 193 (6.606 s), 7.mp4 frame 770
+(25.673 s). Two checks tie the three anchors together without relying on
+any one of them:
+
+- `sync` cross-correlates the clips' 1 ms log-envelopes (high-passed at 2 s)
+  over windows of speech and crowd noise that contain no shot. The lag with
+  the strongest correlation is used; carrying 7.mp4's anchor across it
+  predicts the anchor in 2.MOV within 0.12 s and in 16.mp4 within 0.08 s.
+- The blue-shirt man stands in the right foreground of 2.MOV; the fist he
+  raises at +0.10 to +0.47 s in 7.mp4 appears in 2.MOV at +0.47 to +0.60 s.
+
+`audio` then lists the impulses in each file within 1.5 s before and 1 s
+after the anchor (local maxima of the 1 ms envelope more than four times the
+window's median). The same three impulses precede the anchor in all three
+files. Which is the muzzle report and which the bullet's crack is not decided.
+
+V1 of the study used the loudest transient in each file as t = 0 and checked
+it only against Kirk's microphone hand in 2.MOV. In 2.MOV the loudest
+transient (6.42 s) is a crowd burst that also appears in 7.mp4 at 23.35 s,
+2.25 s before the shot, and the microphone movement was Kirk lowering it.
+That anchor reversed the plaid-shirt finding and is withdrawn.
 
 ## 3. Following each person
 
@@ -53,7 +65,7 @@ Tracked: the blue-shirt man in `7.mp4` (frames 240–830) and `16.mp4`
 (0–250); the white-polo man in `7.mp4` (240–800) and `2.MOV` (179–700); the
 plaid-shirt man at the barrier in `2.MOV` (179–700).
 
-## 4. Stabilised film strips
+## 4. Stabilised film strips and loops
 
 `strip` cuts the same box, relative to the tracked position, out of every
 frame in a window, magnifies it with bicubic interpolation (no sharpening,
