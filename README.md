@@ -14,7 +14,7 @@ anyone's guilt.
 | Study | Reading page | Research and reproducibility |
 | --- | --- | --- |
 | 01 · Two gestures before the shot | [Study page](docs/s1/index.html) | `pipeline/s1_video.py`, `data/s1/`, `inputs/kirkshooting/`; [brief](research/s1/brief.md), [method](research/s1/method.md) |
-| 02 · Movement and timing: a second review | [Study page](docs/s2/index.html) | An independent review reproduced with an editor's note; its package in `research/s2/astra-package/`, original deliverable in `inputs/astra/` |
+| 02 · Movement and timing: a second review | [Study page](docs/s2/index.html) | ChatGPT Astra's independent review reproduced with an editor's note; its package in `research/s2/astra-package/`, original deliverable in `inputs/astra/` |
 
 The [homepage](docs/index.html) lists the studies and the rules they follow.
 `research/investigations.json` holds each study's question, finding and

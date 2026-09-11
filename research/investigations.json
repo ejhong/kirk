@@ -40,9 +40,9 @@
     {
       "id": "s2",
       "number": "02",
-      "kind": "Independent review · four sources · reproduced with an editor's note",
+      "kind": "Independent review by ChatGPT Astra · four sources · reproduced with an editor's note",
       "title": "Movement and timing: a second review",
-      "question": "What does a separate, manual review of the same files by a different model conclude, and where does it differ?",
+      "question": "What does ChatGPT Astra's separate review of the same files conclude, and where does it differ?",
       "page": "docs/s2/index.html",
       "inputs": [
         "inputs/astra/Kirk_video_review.html",
@@ -50,7 +50,7 @@
       ],
       "package": "research/s2/astra-package",
       "finding": "Same frames, same observations. The review confirms sleeve contact at frames 487–492 of 2.MOV before Kirk's visible reaction and unfolding at 199–202 of 16.mp4 after it, resolves no control or object, and finds the folded posture 21 s earlier. Its zero in each file is about 0.3 s before the head snap study 01 V2 uses; the order it reports is unaffected. Study 01 V1 disputed its zero and was wrong.",
-      "limitations": "Manual frame brackets, no audio reference, no blinded rating. Reproduced in the review's own words; the editor's note was rewritten with study 01 V2 and the earlier note withdrawn.",
+      "limitations": "Frame brackets chosen by the reviewing model, no audio reference, no blinded rating. Reproduced in the review's own words; the editor's note was rewritten with study 01 V2 and the earlier note withdrawn.",
       "status": "published",
       "versions": [
         {
@@ -58,7 +58,8 @@
           "date": "2026-09-11",
           "note": "Package received as inputs/astra; boards and slowed clips kept unchanged."
         }
-      ]
+      ],
+      "reviewer": "ChatGPT Astra"
     }
   ]
 }

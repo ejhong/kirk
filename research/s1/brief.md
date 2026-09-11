@@ -1,6 +1,6 @@
 # Study 01 · Brief
 
-The study began from a conversation the site owner had with ChatGPT on
+The study began from a conversation the site owner had with ChatGPT (Astra) on
 11 September 2026. The exchange is transcribed here because it fixed the
 question and the tests before any frame was looked at. Spelling is as
 written.
