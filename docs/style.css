@@ -112,6 +112,14 @@ figure > figcaption { margin-top: 12px; max-width: 820px; }
 .frame.plain { background: transparent; border: 0; padding: 0; }
 .strip .frame { padding: 6px; }
 .strip img { width: 100%; }
+/* film strips: one row of frames at readable size, scrolled sideways */
+.film .frame { padding: 6px; overflow-x: auto; overscroll-behavior-x: contain; }
+.film .frame img { width: auto; max-width: none; height: 300px; display: block; }
+.film .frame.tall img { height: 420px; }
+.film .frame.short img { height: 220px; }
+.film figcaption::before { content: "scroll sideways \2192  "; color: var(--copper); font-family: var(--mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; }
+.anim .frame { padding: 6px; }
+.anim video { width: 100%; max-width: 720px; display: block; margin: 0 auto; }
 .gal { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 26px 0 16px; }
 .gal figure { margin: 0; background: #fff; border: 1px solid var(--rule); border-radius: 6px; padding: 8px; min-width: 0; }
 .gal .ph { display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--dossier); border-radius: 3px; }

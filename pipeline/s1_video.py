@@ -474,7 +474,8 @@ def cmd_figures(a):
         summaries[name] = motion(clip, traj, start, end, region, control, name, title)
     (DATA / "motion_summary.json").write_text(json.dumps(summaries, indent=2))
     for out, clip, traj, start, end, step, box, scale, cols in STRIPS:
-        strip(clip, traj, start, end, step, box, scale, cols, IMG / out)
+        # published strips are single-row filmstrips (the page scrolls them sideways); `cols` is kept for ad-hoc grids
+        strip(clip, traj, start, end, step, box, scale, 10 ** 4, IMG / out)
     audio_context()
     # orientation frames: a crop of the tent with the subjects boxed and labelled
     for out, clip, frame, crop, scale, boxes in ORIENT:
