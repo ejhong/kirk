@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.DS_Store
+# The video inputs are large; fetch them with inputs/fetch.sh (checksums in inputs/kirkshooting/SHA256SUMS)
+inputs/kirkshooting/*.mp4
+inputs/kirkshooting/*.MOV
+inputs/kirkshooting/*.mov
+# Extracted frames, audio and logs
+data/s1/work/
+# Study 02 package zips (the sources zip duplicates the videos; the GitHub zip is unpacked under research/s2/astra-package)
+inputs/astra/*.zip

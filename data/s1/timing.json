@@ -1,0 +1,150 @@
+{
+  "k1hq": {
+    "file": "2.MOV",
+    "codec": "hevc",
+    "width": 1920,
+    "height": 1080,
+    "r_frame_rate": "60000/1001",
+    "avg_frame_rate": "1322400/22057",
+    "nb_frames": 2204,
+    "duration_s": 36.761667,
+    "size_bytes": 73064751,
+    "audio_codec": "aac",
+    "audio_sample_rate": 44100,
+    "tags": {
+      "creation_time": "2025-09-10T18:23:19.000000Z",
+      "com.apple.quicktime.location.ISO6709": "+40.2775-111.7138+1403.564/",
+      "com.apple.quicktime.model": "iPhone 15 Pro",
+      "com.apple.quicktime.software": "18.6.2",
+      "com.apple.quicktime.creationdate": "2025-09-10T12:23:19-0600"
+    },
+    "pts_count": 2204,
+    "dt_ms_median": 16.66699999999821,
+    "dt_ms_min": 14.99999999999968,
+    "dt_ms_max": 18.33400000000296,
+    "first_gap_ms": 16.667,
+    "gaps_over_1p5x": [],
+    "checked_frames": [
+      100,
+      720
+    ],
+    "near_duplicate_frames": 0,
+    "consecutive_diff_median": 10.924327850341797,
+    "largest_diff_frames": [
+      129,
+      131,
+      134,
+      135,
+      133
+    ]
+  },
+  "k1": {
+    "file": "2.mp4",
+    "codec": "h264",
+    "width": 270,
+    "height": 480,
+    "r_frame_rate": "2997/50",
+    "avg_frame_rate": "2997/50",
+    "nb_frames": 2204,
+    "duration_s": 36.779002,
+    "size_bytes": 3637953,
+    "audio_codec": "aac",
+    "audio_sample_rate": 44100,
+    "tags": {},
+    "pts_count": 2204,
+    "dt_ms_median": 16.683000000000447,
+    "dt_ms_min": 16.682999999993342,
+    "dt_ms_max": 16.684000000005028,
+    "first_gap_ms": 16.683,
+    "gaps_over_1p5x": [],
+    "checked_frames": [
+      0,
+      2204
+    ],
+    "near_duplicate_frames": 0,
+    "consecutive_diff_median": 12.591303825378418,
+    "largest_diff_frames": [
+      62,
+      63,
+      61,
+      60,
+      64
+    ]
+  },
+  "k2": {
+    "file": "16.mp4",
+    "codec": "h264",
+    "width": 720,
+    "height": 1280,
+    "r_frame_rate": "30/1",
+    "avg_frame_rate": "26910000/912407",
+    "nb_frames": 299,
+    "duration_s": 10.197333,
+    "size_bytes": 1943085,
+    "audio_codec": "aac",
+    "audio_sample_rate": 48000,
+    "tags": {
+      "creation_time": "2025-09-20T02:59:02.000000Z"
+    },
+    "pts_count": 299,
+    "dt_ms_median": 33.34400000000004,
+    "dt_ms_min": 32.744000000000995,
+    "dt_ms_max": 204.067,
+    "first_gap_ms": 204.067,
+    "gaps_over_1p5x": [
+      [
+        0,
+        204.07
+      ]
+    ],
+    "checked_frames": [
+      0,
+      299
+    ],
+    "near_duplicate_frames": 0,
+    "consecutive_diff_median": 12.85266399383545,
+    "largest_diff_frames": [
+      282,
+      273,
+      272,
+      263,
+      274
+    ]
+  },
+  "k3": {
+    "file": "7.mp4",
+    "codec": "hevc",
+    "width": 1920,
+    "height": 1080,
+    "r_frame_rate": "30000/1001",
+    "avg_frame_rate": "176400/5881",
+    "nb_frames": 1176,
+    "duration_s": 39.217007,
+    "size_bytes": 47923489,
+    "audio_codec": "aac",
+    "audio_sample_rate": 44100,
+    "tags": {
+      "com.apple.quicktime.software": "{\"publicMode\":\"1\",\"TEEditor\":\"2\",\"isFastImport\":\"1\",\"alpha_split_type\":\"0\",\"transType\":\"1\",\"te_is_reencode\":\"0\",\"source\":\"5\"}",
+      "creation_time": "2025-09-10T18:46:46Z"
+    },
+    "pts_count": 1176,
+    "dt_ms_median": 33.33300000000072,
+    "dt_ms_min": 33.33299999999895,
+    "dt_ms_max": 35.00000000000014,
+    "first_gap_ms": 33.333,
+    "gaps_over_1p5x": [],
+    "checked_frames": [
+      0,
+      1176
+    ],
+    "near_duplicate_frames": 0,
+    "consecutive_diff_median": 15.721298217773438,
+    "largest_diff_frames": [
+      871,
+      872,
+      870,
+      873,
+      869
+    ]
+  }
+}

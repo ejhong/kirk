@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+.cache/
+inputs/downloaded/*
+!inputs/downloaded/.gitkeep
+report/Kirk_video_review.html
+*.part
+verification/

@@ -1,0 +1,22 @@
+{
+  "source_hashes_verified": 4,
+  "videos": [
+    {
+      "file": "sleeve_slow_review.mp4",
+      "decoded_frames": 138,
+      "duration_seconds": "9.209209",
+      "muted": true
+    },
+    {
+      "file": "blue_slow_review.mp4",
+      "decoded_frames": 84,
+      "duration_seconds": "11.200000",
+      "muted": true
+    }
+  ],
+  "html_asset_references_verified": 5,
+  "standalone_embedded_assets_verified": 5,
+  "markdown_image_links": "passed",
+  "output_hashes_verified": 45,
+  "browser_layout_tested": false
+}

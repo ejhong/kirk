@@ -1,0 +1,39 @@
+{
+  "site": "Kirk Case Studies",
+  "updated": "2026-09-11",
+  "investigations": [
+    {
+      "id": "s1",
+      "number": "01",
+      "kind": "Frame-level video analysis · three cameras, one camera original",
+      "title": "Two gestures before the shot",
+      "question": "Did two men on the security line press something in the seconds before the shot, and try to hide it?",
+      "page": "docs/s1/index.html",
+      "inputs": ["inputs/kirkshooting/2.MOV", "inputs/kirkshooting/2.mp4", "inputs/kirkshooting/16.mp4", "inputs/kirkshooting/7.mp4"],
+      "pipeline": "pipeline/s1_video.py",
+      "finding": "Both gestures exist and both follow the shot. The plaid-shirt man's hands are on the barrier rail from at least 3.4 s before the transient until 1.7 s after it; his right hand reaches his left sleeve at +1.85 s. The blue-shirt man's arms stay folded, right hand hidden, for at least 17 s before the shot and through it; the hand emerges at +0.23 s as a closed fist and he unfolds fully at +1.7 s. The man first taken for the sleeve-scratcher, in a white polo, is holding a phone.",
+      "limitations": "A hand out of view cannot be shown still; the blue-shirt man's right hand is hidden until it emerges. Two of the three clips are re-encoded copies whose audio may be offset by frames, so every time is checked against Kirk's own first movement. The plaid-shirt man is seen from one camera. No blinded rating was run; purpose is not addressed.",
+      "levels": {
+        "observable_movement": "yes, catalogued per frame for every hand in view",
+        "identifiable_action": "white-polo man: a phone; plaid-shirt man: none resolved; blue-shirt man: hand occluded",
+        "purpose": "not addressed"
+      },
+      "status": "published",
+      "versions": [{"label": "V1", "date": "2026-09-11", "note": "First run, four files from the archive.org collection, animations added the same day."}]
+    },
+    {
+      "id": "s2",
+      "number": "02",
+      "kind": "Independent review · four sources · reproduced with an editor's note",
+      "title": "Movement and timing: a second review",
+      "question": "What does a separate, manual review of the same files by a different model conclude, and where does it differ?",
+      "page": "docs/s2/index.html",
+      "inputs": ["inputs/astra/Kirk_video_review.html", "inputs/astra/Kirk_video_review_GitHub.zip"],
+      "package": "research/s2/astra-package",
+      "finding": "Same frames, same observations, one different choice. The review confirms sleeve contact at frames 487–492 of 2.MOV and unfolding at 199–202 of 16.mp4, resolves no control or object, and finds the folded posture 21 s earlier in 7.mp4. It sets its zero at a visible movement of Kirk that it places at 8.35 s in 2.MOV; the transient and Kirk's first reaction are at 6.42 s, so the contact it dates 0.1–0.2 s before the event is 1.7–1.8 s after it.",
+      "limitations": "Manual frame brackets, no audio reference, no blinded rating. Reproduced in the review's own words; only the editor's note is added.",
+      "status": "published",
+      "versions": [{"label": "v1.0", "date": "2026-09-11", "note": "Package received as inputs/astra; boards and slowed clips kept unchanged."}]
+    }
+  ]
+}

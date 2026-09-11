@@ -1,0 +1,34 @@
+[
+  {
+    "source": "kirk1",
+    "sha256": "a3b763c3943bce787034312c303e306fdfff6ae0c3cf747a3812db800cea8036",
+    "decoded_frames": 2204,
+    "min_pts_interval_seconds": 0.016682999999993342,
+    "max_pts_interval_seconds": 0.016684000000005028,
+    "nonpositive_intervals": 0
+  },
+  {
+    "source": "kirk2",
+    "sha256": "41e6dcb19000774c225f1d41241dce37cbd3376797588778c6060a3f434c5241",
+    "decoded_frames": 299,
+    "min_pts_interval_seconds": 0.032744000000000995,
+    "max_pts_interval_seconds": 0.204067,
+    "nonpositive_intervals": 0
+  },
+  {
+    "source": "archive2",
+    "sha256": "2a66b3227e1eabc5a109a2ed0d0a7fa7a9fda21e307174a3cdfbc95d9f865013",
+    "decoded_frames": 2204,
+    "min_pts_interval_seconds": 0.01499999999999968,
+    "max_pts_interval_seconds": 0.01833400000000296,
+    "nonpositive_intervals": 0
+  },
+  {
+    "source": "archive7",
+    "sha256": "4a8fd744def6020ddd20fc1fe5e74fe925cb9bad12ec6caf9f62cff7ba357557",
+    "decoded_frames": 1176,
+    "min_pts_interval_seconds": 0.03333299999999895,
+    "max_pts_interval_seconds": 0.03500000000000014,
+    "nonpositive_intervals": 0
+  }
+]

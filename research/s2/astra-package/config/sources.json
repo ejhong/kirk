@@ -1,0 +1,37 @@
+{
+  "review_date": "2026-09-11",
+  "sources": [
+    {
+      "id": "kirk1",
+      "filename": "kirk1.mp4",
+      "path": "supplied/kirk1.mp4",
+      "url": null,
+      "bytes": 3637953,
+      "sha256": "a3b763c3943bce787034312c303e306fdfff6ae0c3cf747a3812db800cea8036"
+    },
+    {
+      "id": "kirk2",
+      "filename": "kirk2.mp4",
+      "path": "supplied/kirk2.mp4",
+      "url": null,
+      "bytes": 1943085,
+      "sha256": "41e6dcb19000774c225f1d41241dce37cbd3376797588778c6060a3f434c5241"
+    },
+    {
+      "id": "archive2",
+      "filename": "2.MOV",
+      "path": "downloaded/2.MOV",
+      "url": "https://archive.org/download/kirkshooting/2.MOV",
+      "bytes": 73064751,
+      "sha256": "2a66b3227e1eabc5a109a2ed0d0a7fa7a9fda21e307174a3cdfbc95d9f865013"
+    },
+    {
+      "id": "archive7",
+      "filename": "7.mp4",
+      "path": "downloaded/7.mp4",
+      "url": "https://archive.org/download/kirkshooting/7.mp4",
+      "bytes": 47923489,
+      "sha256": "4a8fd744def6020ddd20fc1fe5e74fe925cb9bad12ec6caf9f62cff7ba357557"
+    }
+  ]
+}

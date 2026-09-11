@@ -1,0 +1,198 @@
+{
+  "time_basis": "Decoded presentation timestamps in these files, not authenticated physical event times. Frame indices are zero-based. Annotations are manual interpretations, not automated findings.",
+  "views": [
+    {
+      "id": "sleeve",
+      "source": "archive2",
+      "title": "Sleeve contact: clearer 2.MOV",
+      "crop": [
+        470,
+        600,
+        400,
+        420
+      ],
+      "start_frame": 450,
+      "end_frame": 587,
+      "marker_seconds": 8.35,
+      "marker_window": [
+        8.32,
+        8.38
+      ],
+      "fps": 59.94,
+      "selected_frames": [
+        480,
+        487,
+        492,
+        500,
+        508,
+        524,
+        548,
+        564
+      ],
+      "labels": [
+        "Before hand emergence",
+        "Hand rising",
+        "Sleeve-area contact",
+        "Near visual reference",
+        "Contact continues",
+        "Fingers reposition",
+        "Hand remains at sleeve",
+        "Later contact"
+      ],
+      "finding": "Contact precedes the visual event. No identifiable control is resolved.",
+      "video": true
+    },
+    {
+      "id": "blue",
+      "source": "kirk2",
+      "title": "Blue shirt: event sequence",
+      "crop": [
+        185,
+        465,
+        130,
+        200
+      ],
+      "start_frame": 145,
+      "end_frame": 228,
+      "marker_seconds": 6.31,
+      "marker_window": [
+        6.272,
+        6.339
+      ],
+      "fps": 30,
+      "selected_frames": [
+        145,
+        175,
+        183,
+        185,
+        199,
+        202,
+        207,
+        213
+      ],
+      "labels": [
+        "Earlier folded posture",
+        "Before visual reference",
+        "Near visual reference",
+        "After visual reference",
+        "Arms still folded",
+        "Hand emerging",
+        "Arms unfolding",
+        "Hand lowered"
+      ],
+      "finding": "Clear unfolding follows the visual event. Device transfer is unverified.",
+      "video": true
+    },
+    {
+      "id": "blue_context",
+      "source": "archive7",
+      "title": "Blue shirt: earlier close view in 7.mp4",
+      "crop": [
+        950,
+        400,
+        340,
+        450
+      ],
+      "start_frame": 108,
+      "end_frame": 138,
+      "marker_seconds": 25.37,
+      "marker_window": [
+        25.32,
+        25.42
+      ],
+      "fps": 30,
+      "selected_frames": [
+        108,
+        114,
+        120,
+        126,
+        132,
+        138
+      ],
+      "labels": [
+        "Folded arms",
+        "Hand beneath upper arm",
+        "Folded posture continues",
+        "Bent fingers visible",
+        "Palm remains obscured",
+        "No device identified"
+      ],
+      "finding": "The hand-under-arm position is visible roughly 21 seconds earlier.",
+      "video": false
+    }
+  ],
+  "observations": [
+    {
+      "source": "archive2",
+      "description": "Right hand becomes visible rising toward left upper-arm/sleeve area",
+      "seconds": [
+        8.11,
+        8.16
+      ]
+    },
+    {
+      "source": "archive2",
+      "description": "Fingers reach sleeve/upper-arm area",
+      "seconds": [
+        8.19,
+        8.24
+      ]
+    },
+    {
+      "source": "archive2",
+      "description": "First clear abrupt visible movement of Kirk (reference only)",
+      "seconds": [
+        8.32,
+        8.38
+      ]
+    },
+    {
+      "source": "archive2",
+      "description": "Contact persists into later frames; fingers reposition",
+      "seconds": [
+        8.4,
+        9.4
+      ]
+    },
+    {
+      "source": "kirk2",
+      "description": "First clear abrupt visible movement of Kirk (reference only)",
+      "seconds": [
+        6.272,
+        6.339
+      ]
+    },
+    {
+      "source": "kirk2",
+      "description": "Clear unfolding and hand emergence",
+      "seconds": [
+        6.84,
+        6.94
+      ]
+    },
+    {
+      "source": "kirk2",
+      "description": "Hand lowers toward front/waist",
+      "seconds": [
+        7.1,
+        7.3
+      ]
+    },
+    {
+      "source": "archive7",
+      "description": "Closer view of hand beneath folded upper arm",
+      "seconds": [
+        3.6,
+        4.6
+      ]
+    },
+    {
+      "source": "archive7",
+      "description": "First clear abrupt visible movement of Kirk (approximate reference)",
+      "seconds": [
+        25.32,
+        25.42
+      ]
+    }
+  ]
+}

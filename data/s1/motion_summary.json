@@ -1,0 +1,72 @@
+{
+  "k3blue": {
+    "n": 548,
+    "t_min": -17.624667000000002,
+    "t_max": 0.6086670000000005,
+    "region_median": 1.9123481512069702,
+    "region_p90": 5.587054681777956,
+    "region_max": 17.01505470275879,
+    "region_max_t": -2.991333000000001,
+    "control_median": 2.200526475906372,
+    "pre_shot_median": 1.850203812122345,
+    "pre_shot_p95": 5.862559080123901,
+    "last_second_max": 9.2747802734375,
+    "last_second_max_percentile_of_pre": 99.43181818181817
+  },
+  "k2blue": {
+    "n": 204,
+    "t_min": -4.832933,
+    "t_max": 1.9354000000000005,
+    "region_median": 1.5341538786888123,
+    "region_p90": 2.530642104148865,
+    "region_max": 5.078756332397461,
+    "region_max_t": 1.8687110000000002,
+    "control_median": 2.998625874519348,
+    "pre_shot_median": 1.5256672501564026,
+    "pre_shot_p95": 2.756910121440887,
+    "last_second_max": 2.9668800830841064,
+    "last_second_max_percentile_of_pre": 97.91666666666666
+  },
+  "k1polo": {
+    "n": 439,
+    "t_min": -3.0655669999999997,
+    "t_max": 4.239433000000001,
+    "region_median": 4.400085926055908,
+    "region_p90": 14.312037658691406,
+    "region_max": 33.06044387817383,
+    "region_max_t": 4.054433,
+    "control_median": 1.831593632698059,
+    "pre_shot_median": 3.8811299800872803,
+    "pre_shot_p95": 14.311104774475098,
+    "last_second_max": 5.242708683013916,
+    "last_second_max_percentile_of_pre": 78.45303867403315
+  },
+  "k1tan": {
+    "n": 439,
+    "t_min": -3.0655669999999997,
+    "t_max": 4.239433000000001,
+    "region_median": 3.374452590942383,
+    "region_p90": 6.819754123687744,
+    "region_max": 13.130302429199219,
+    "region_max_t": -0.16389999999999993,
+    "control_median": 3.417018413543701,
+    "pre_shot_median": 2.6587328910827637,
+    "pre_shot_p95": 7.258601188659668,
+    "last_second_max": 13.130302429199219,
+    "last_second_max_percentile_of_pre": 99.4475138121547
+  },
+  "k1tan_sleeve": {
+    "n": 439,
+    "t_min": -3.0655669999999997,
+    "t_max": 4.239433000000001,
+    "region_median": 3.72869610786438,
+    "region_p90": 6.109211826324462,
+    "region_max": 13.132923126220703,
+    "region_max_t": 2.8544329999999993,
+    "control_median": 3.778095245361328,
+    "pre_shot_median": 3.1403465270996094,
+    "pre_shot_p95": 6.013941287994385,
+    "last_second_max": 5.780510902404785,
+    "last_second_max_percentile_of_pre": 92.81767955801105
+  }
+}
