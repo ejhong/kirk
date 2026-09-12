@@ -656,9 +656,9 @@ GIFS = [
 # Close-up loops: nothing on the frame but the subject; a thin timeline underneath with one mark, the frame in which Kirk visibly moves.
 CLOSEUPS = [
     # out, clip, traj, start, end, subject box (rel.), scale, playback fps, Kirk panel box (absolute) or None
-    ("closeup_plaid_kirk.gif", "k1hq", "k1tan", 470, 562, (30, -60, 310, 220), 1.15, 15, (110, 420, 520, 1000)),
-    ("closeup_blue_front.gif", "k3", "k3blue", 740, 792, (-10, -20, 80, 120), 3.2, 8, None),
-    ("closeup_blue_pocket.gif", "k3", "k3blue", 740, 784, (-12, 35, 48, 100), 6.5, 6, None),
+    ("closeup_plaid_kirk_v3.gif", "k1hq", "k1tan", 470, 562, (30, -60, 310, 220), 1.15, 15, (110, 420, 520, 1000)),
+    ("closeup_blue_front_v3.gif", "k3", "k3blue", 740, 792, (-10, -20, 80, 120), 3.2, 8, None),
+    ("closeup_blue_pocket_v3.gif", "k3", "k3blue", 740, 784, (-12, 35, 48, 100), 6.5, 6, None),
 ]
 
 
