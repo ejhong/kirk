@@ -16,7 +16,7 @@
         "inputs/kirkshooting/7.mp4"
       ],
       "pipeline": "pipeline/s1_video.py",
-      "finding": "Zero is the first frame in which Kirk's head and shoulders move abruptly (2.MOV 508, 16.mp4 185, 7.mp4 759), tied across the clips by their shared sound to 0.05 s; a larger head snap follows 0.2-0.37 s later. The plaid-shirt man's right hand leaves the barrier rail 0.30 s before that frame and his index finger is on his left sleeve 0.20 s before it, 50 ms before the first sound reaches that camera; no button, strap or device resolves at 1080p. The blue-shirt man's arms stay folded through it with the right hand hidden under the left arm on Kirk's side; the visible fingers of his left hand are unchanged through it apart from a re-pixelation at frame 756 that is an encoder keyframe on the file's fixed 28-frame cycle; Kirk's rising hand covers the fold from +0.23 s and the right fist emerges at +0.47 s. The white-polo man first taken for the sleeve-scratcher is holding a phone.",
+      "finding": "Zero is the first frame in which Kirk's head and shoulders move abruptly (2.MOV 508, 16.mp4 185, 7.mp4 759), tied across the clips by their shared sound to 0.05 s; a larger head snap follows 0.2-0.37 s later. The plaid-shirt man's right hand leaves the barrier rail 0.30 s before that frame and his index finger is on his left sleeve 0.20 s before it, 50 ms before the first sound reaches that camera; no button, strap or device resolves at 1080p. The blue-shirt man's arms stay folded through it; the fingertips of one tucked hand (which hand is not settled) are unchanged through it apart from a re-pixelation at frame 756 that is an encoder keyframe on the file's fixed 28-frame cycle; Kirk's rising hand covers the fold from +0.23 s and the right fist emerges at +0.47 s. The white-polo man first taken for the sleeve-scratcher is holding a phone.",
       "limitations": "A hand out of view cannot be shown still. The anchor is a human reading of one frame per clip, checked by audio alignment to about 0.05 s and by a second person's movement. The plaid-shirt man is seen from one camera. No blinded rating was run; purpose is not addressed.",
       "levels": {
         "observable_movement": "yes, catalogued per frame for every hand in view",
@@ -43,7 +43,7 @@
         {
           "label": "V3.1",
           "date": "2026-09-11",
-          "note": "Fuzziness on the tucked fingers 100 ms before Kirk moves traced to an H.264 keyframe (every 28 frames); hand anatomy corrected (visible fingers are the left hand's). Loops carry marks for the finger-on-sleeve frame and the keyframe."
+          "note": "Fuzziness on the tucked fingers 100 ms before Kirk moves traced to an H.264 keyframe (every 28 frames). Which hand the visible fingers belong to is left open; the emerging hand is the right one and rises to his mouth. Loops carry marks for the finger-on-sleeve frame and the keyframe."
         }
       ]
     },
