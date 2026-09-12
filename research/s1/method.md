@@ -106,10 +106,13 @@ right hand tucked under the left armpit with fingertips showing) is the brief
 author's reading of the frames at speed and is adopted; the frame analysis,
 from crops about forty pixels wide, could not confirm which hand on its own
 and does not contradict it. The close-up segment (frames 100-140) shows the
-right forearm on top of the fold, consistent with it. The hand that emerges
-afterwards is the right one (2.MOV, from behind, shows the right arm rising at
-+0.67 s); it rises to his mouth and chin by +0.8 s, and nothing in the fist
-resolves at 9x.
+right forearm on top of the fold, consistent with it. After the fold opens, 7.mp4 shows a fist rising to his mouth (+0.47 to
++0.83 s) and 16.mp4 shows a hand dropping to the front of his hip (+0.70 to
++0.90 s, frames 206-212), where it stays until the camera drops at +1.2 s. Which
+hand each camera sees is not settled; the author's reading (right hand to the
+pocket) is recorded with the alternative. An earlier claim that 2.MOV showed
+the right arm rising was a misreading of other people's hands on the barrier
+and is withdrawn. Nothing smaller than a hand resolves in either clip.
 
 ## 7. What was not done
 

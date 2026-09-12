@@ -659,6 +659,8 @@ CLOSEUPS = [
     ("closeup_plaid_kirk_v4.gif", "k1hq", "k1tan", 470, 562, (30, -60, 310, 220), 1.15, 15, (110, 420, 520, 1000), ((496, "finger on sleeve"),)),
     ("closeup_blue_front_v3.gif", "k3", "k3blue", 740, 792, (-10, -20, 80, 120), 3.2, 8, None, ()),
     ("closeup_blue_pocket_v4.gif", "k3", "k3blue", 740, 784, (-12, 35, 48, 100), 6.5, 6, None, ((756, "keyframe 756"),)),
+    # 16.mp4, fixed crop (the camera is steady until it drops at 227): the hand from the fold to the hip
+    ("closeup_blue_hip_v1.gif", "k2", None, 178, 224, (160, 430, 320, 690), 3.0, 8, None, ((206, "out of the fold"), (212, "at the hip"))),
 ]
 
 
@@ -775,7 +777,7 @@ def closeup(out, clip, traj, start, end, box, scale, fps_play, kirk_box=None, ma
     from PIL import Image, ImageDraw
     import tempfile
 
-    T = load_traj(traj)
+    T = load_traj(traj) if traj else {i: (0, 0, 1.0) for i in range(start, end)}
     P = pts(clip)
     r = REACTION[clip]
     f_small = _font(12)
@@ -798,18 +800,18 @@ def closeup(out, clip, traj, start, end, box, scale, fps_play, kirk_box=None, ma
         canvas.paste(Image.fromarray(cv2.cvtColor(c, cv2.COLOR_BGR2RGB)), (0, 0))
         d = ImageDraw.Draw(canvas)
         if marks:  # a label strip above the bar for the extra marks
-            d.rectangle((0, H - 14, W, H), fill=(13, 20, 29))
+            d.rectangle((0, H - 14 - (13 if len(marks) > 1 else 0), W, H), fill=(13, 20, 29))
         # timeline: start..end mapped to the width; mark at the reaction frame; cursor at the current frame
         xr = int((P[r] - P[idx[0]]) / (P[idx[-1]] - P[idx[0]]) * (W - 1))
         xc = int((P[i] - P[idx[0]]) / (P[idx[-1]] - P[idx[0]]) * (W - 1))
         d.line((0, H + 12, W, H + 12), fill=(37, 50, 71), width=2)
         d.line((xr, H + 3, xr, H + 21), fill=(92, 100, 160), width=3)
         d.text((min(max(xr + 5, 2), W - 70), H + 20), "Kirk moves", font=f_small, fill=(160, 172, 216))
-        for mf, mlabel in marks:  # extra marks: (frame, label), drawn in the accent colour above the bar
+        for k, (mf, mlabel) in enumerate(marks):  # extra marks: (frame, label), drawn in the accent colour above the bar, labels staggered
             xm = int((P[mf] - P[idx[0]]) / (P[idx[-1]] - P[idx[0]]) * (W - 1))
             d.line((xm, H + 3, xm, H + 21), fill=(216, 172, 133), width=3)
             tw = d.textlength(mlabel, font=f_small)
-            d.text((min(max(xm - tw // 2, 2), W - tw - 2), H + 2 - 14), mlabel, font=f_small, fill=(216, 172, 133))
+            d.text((min(max(xm - tw // 2, 2), W - tw - 2), H + 2 - 14 - 13 * (k % 2)), mlabel, font=f_small, fill=(216, 172, 133))
         d.line((xc, H + 5, xc, H + 19), fill=(216, 172, 133), width=3)
         ms = (P[i] - P[r]) * 1000
         d.text((4, H + 20), f"{ms:+.0f} ms", font=f_small, fill=(216, 172, 133) if i == r else (128, 147, 171))
