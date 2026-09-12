@@ -14,6 +14,7 @@ produced by `figures`, every number by `timing`, `audio` and `motion`.
     gridref  one gridded crop, used to choose region coordinates by eye
     figures  the whole manifest of strips, motion plots and orientation frames
     gifs     looping animations: stabilised subject, Kirk, and the audio timeline
+    keyframes  the finger patch at every keyframe of 7.mp4 beside the one before the shot: sheet, loop, sharpness
 
 Frame index i is zero-based; frame files are named f{i+1:05d}.png. Times are
 the frame's presentation timestamp (PTS) from ffprobe, not i / fps, so the
@@ -848,6 +849,178 @@ def cmd_gifs(a):
         closeup(IMG / spec[0], *spec[1:])
 
 
+# --------------------------------------------------------------------------- keyframes
+# The finger patch under the blue-shirt man's left arm, the crop the pocket loop uses.
+KF_CLIP, KF_TRAJ, KF_BOX, KF_BG = "k3", "k3blue", (-12, 35, 48, 100), (-84, 35, -24, 100)
+KF_SHEET = (616, 644, 672, 700, 728, 756)  # every keyframe from -4.8 s to the one before Kirk moves
+KF_LOOP = (644, 700, 728, 756)             # the still ones (672 is the lean) beside 756, played in step
+
+
+def frame_types(clip):
+    p = WORK / f"pts_{clip}.csv"
+    return [l.split(",")[1] for l in p.read_text().splitlines() if l.strip()]
+
+
+def keyframes(sheet_out="k3_fingers_keyframes.jpg", loop_out="closeup_blue_keyframes_v1.gif", half=4, scale=6, fps_play=6, first=560, last=790):
+    """Is the re-pixelation at 756 what every keyframe does? Three answers from one crop:
+    a sheet of each keyframe with its neighbours, a loop of four keyframes played in step,
+    and the finger patch's sharpness at every frame with the keyframe pops measured against the rest."""
+    import cv2
+    import numpy as np
+    from PIL import Image, ImageDraw
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    import tempfile
+
+    clip, T, P, TY = KF_CLIP, load_traj(KF_TRAJ), pts(clip := KF_CLIP), frame_types(KF_CLIP)
+    r = REACTION[clip]
+    amber, indigo, dossier, grey, red = (216, 172, 133), (92, 100, 160), (13, 20, 29), (128, 147, 171), (60, 60, 230)
+    f_small, f_mid = _font(12), _font(14)
+    cache = {}
+
+    def crop(i):
+        if i not in cache:
+            im = cv2.imread(str(frame_path(clip, i)))
+            c = crop_rel(im, T[i][0], T[i][1], KF_BOX)
+            cache[i] = cv2.cvtColor(cv2.resize(c, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC), cv2.COLOR_BGR2RGB)
+        return cache[i]
+
+    def tile(i, outline=None):
+        c = crop(i)
+        W, H = c.shape[1], c.shape[0]
+        im = Image.new("RGB", (W + 6, H + 22 + 6), dossier)
+        im.paste(Image.fromarray(c), (3, 22 + 3))
+        d = ImageDraw.Draw(im)
+        col = red if i == r else (amber if TY[i] == "I" else grey)
+        d.text((4, 4), f"{i}  {t_rel(clip, i, P) * 1000:+.0f} ms  {TY[i]}", font=f_small, fill=col)
+        if outline:
+            d.rectangle((1, 22 + 1, W + 4, 22 + H + 4), outline=outline, width=3)
+        return im
+
+    # 1. the sheet: one row per keyframe, K-half .. K+half
+    rows = []
+    for K in KF_SHEET:
+        tiles = [tile(i, amber if i == K else None) for i in range(K - half, K + half + 1)]
+        w, h = tiles[0].size
+        lab = Image.new("RGB", (150, h), dossier)
+        d = ImageDraw.Draw(lab)
+        d.text((8, h // 2 - 22), f"keyframe {K}", font=f_mid, fill=amber)
+        d.text((8, h // 2 - 4), f"{t_rel(clip, K, P):+.2f} s", font=f_mid, fill=grey)
+        d.text((8, h // 2 + 14), "before Kirk moves" if K < r else "", font=f_small, fill=grey)
+        row = Image.new("RGB", (150 + w * len(tiles), h), dossier)
+        row.paste(lab, (0, 0))
+        for k, t in enumerate(tiles):
+            row.paste(t, (150 + k * w, 0))
+        rows.append(row)
+    sheet = Image.new("RGB", (rows[0].width, sum(rw.height for rw in rows)), dossier)
+    y = 0
+    for rw in rows:
+        sheet.paste(rw, (0, y)); y += rw.height
+    sheet.save(IMG / sheet_out, quality=90)
+    print(sheet_out, sheet.size)
+
+    # 2. the loop: the chosen keyframes side by side, each panel cycling K-10 .. K+10 so the keyframe lands in every panel at once
+    span = 10
+    frames = []
+    for k in range(-span, span + 1):
+        panels = []
+        for K in KF_LOOP:
+            i = K + k
+            c = crop(i)
+            W, H = c.shape[1], c.shape[0]
+            bar = 34
+            im = Image.new("RGB", (W, H + bar), dossier)
+            im.paste(Image.fromarray(c), (0, 0))
+            d = ImageDraw.Draw(im)
+            d.line((0, H + 12, W, H + 12), fill=(37, 50, 71), width=2)
+            xm = int((span) / (2 * span) * (W - 1)); xc = int((k + span) / (2 * span) * (W - 1))
+            d.line((xm, H + 3, xm, H + 21), fill=amber, width=3)
+            d.line((xc, H + 5, xc, H + 19), fill=amber if k == 0 else grey, width=3)
+            d.rectangle((0, 0, W, 16), fill=dossier)
+            d.text((4, 2), f"keyframe {K}  ({t_rel(clip, K, P):+.2f} s)", font=f_small, fill=amber)
+            d.text((4, H + 20), f"{i}  {t_rel(clip, i, P) * 1000:+.0f} ms  {TY[i]}", font=f_small, fill=amber if k == 0 else grey)
+            if k == 0:
+                d.rectangle((0, 0, W - 1, H - 1), outline=amber, width=4)
+            if i == r:
+                d.rectangle((0, 0, W - 1, H - 1), outline=indigo, width=4)
+                d.text((W - 76, H + 20), "Kirk moves", font=f_small, fill=(160, 172, 216))
+            panels.append(im)
+        w, h = panels[0].size
+        fr = Image.new("RGB", (w * len(panels) + 8 * (len(panels) - 1), h), dossier)
+        for j, pn in enumerate(panels):
+            fr.paste(pn, (j * (w + 8), 0))
+        frames.extend([np.array(fr)] * (3 if k == 0 else 1))
+    tmp = Path(tempfile.mkdtemp())
+    for k, fr in enumerate(frames):
+        Image.fromarray(fr).save(tmp / f"g{k:04d}.png")
+    out = IMG / loop_out
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", str(fps_play), "-i", str(tmp / "g%04d.png"),
+                    "-vf", "split[a][b];[a]palettegen=max_colors=128:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle",
+                    "-loop", "0", str(out)], check=True)
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", str(fps_play), "-i", str(tmp / "g%04d.png"),
+                    "-vf", "pad=ceil(iw/2)*2:ceil(ih/2)*2", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18", "-preset", "slow",
+                    "-movflags", "+faststart", str(out.with_suffix(".mp4"))], check=True)
+    for f in tmp.glob("*.png"):
+        f.unlink()
+    tmp.rmdir()
+    print(loop_out, len(frames), "frames")
+
+    # 3. sharpness (Laplacian variance) of the finger patch and a background patch at every frame; the pop at a frame is its
+    #    sharpness over the mean of the three frames before it. Keyframe pops are compared with the pops of every other frame.
+    recs = []
+    for i in range(first, last + 1):
+        if i not in T:
+            continue
+        g = cv2.imread(str(frame_path(clip, i)), cv2.IMREAD_GRAYSCALE)
+        f = crop_rel(g, T[i][0], T[i][1], KF_BOX); b = crop_rel(g, T[i][0], T[i][1], KF_BG)
+        recs.append({"frame": i, "t_rel_s": round(t_rel(clip, i, P), 3), "type": TY[i],
+                     "fingers_sharpness": round(float(cv2.Laplacian(f, cv2.CV_64F).var()), 1),
+                     "background_sharpness": round(float(cv2.Laplacian(b, cv2.CV_64F).var()), 1)})
+    for k, rec in enumerate(recs):
+        for key in ("fingers", "background"):
+            prev = [x[f"{key}_sharpness"] for x in recs[max(0, k - 3):k]]
+            rec[f"{key}_pop"] = round(rec[f"{key}_sharpness"] / (sum(prev) / len(prev)), 3) if len(prev) == 3 else None
+    kf = [x for x in recs if x["type"] == "I" and x["fingers_pop"] and x["frame"] <= 756]  # 784 is under Kirk's hand
+    other = [x for x in recs if x["type"] != "I" and x["fingers_pop"] and x["frame"] <= 765]
+    fp = np.array([x["fingers_pop"] for x in other])
+    pop756 = next(x["fingers_pop"] for x in kf if x["frame"] == 756)
+    summary = {
+        "keyframes": {x["frame"]: {"t": x["t_rel_s"], "fingers_pop": x["fingers_pop"], "background_pop": x["background_pop"]} for x in kf},
+        "non_keyframe_fingers_pop": {"n": int(len(fp)), "median": round(float(np.median(fp)), 3), "p95": round(float(np.percentile(fp, 95)), 3), "max": round(float(fp.max()), 3),
+                                     "max_frame": int(other[int(fp.argmax())]["frame"])},
+        "keyframe_fingers_pop": {"min": min(x["fingers_pop"] for x in kf), "max": max(x["fingers_pop"] for x in kf), "at_756": pop756},
+        "rank_of_756_among_keyframes": sorted((x["fingers_pop"] for x in kf), reverse=True).index(pop756) + 1,
+        "keyframes_above_non_keyframe_p95": int(sum(x["fingers_pop"] > np.percentile(fp, 95) for x in kf)),
+    }
+    (DATA / "fingers_keyframes_k3.json").write_text(json.dumps({"summary": summary, "frames": recs}, indent=1))
+    print(json.dumps(summary, indent=1))
+
+    t = np.array([x["t_rel_s"] for x in recs]); fs = np.array([x["fingers_sharpness"] for x in recs]); bs = np.array([x["background_sharpness"] for x in recs])
+    fig, axes = plt.subplots(2, 1, figsize=(10.5, 4.6), dpi=130, facecolor="white", sharex=True)
+    for ax, y, lab in ((axes[0], fs, "finger patch"), (axes[1], bs, "background patch, 60 px to the left")):
+        for x in recs:
+            if x["type"] == "I":
+                ax.axvline(x["t_rel_s"], color=INK_SOFT, ls=":", lw=0.8)
+        ax.plot(t, y, color=STEEL, lw=1.0)
+        ax.axvline(0, color=INDIGO, ls="--", lw=1)
+        ax.set_ylabel("sharpness")
+        ax.set_title(lab, loc="left", fontsize=10, color=INK_SOFT)
+        for s_ in ("top", "right"):
+            ax.spines[s_].set_visible(False)
+    axes[0].axvspan(t_rel(clip, 766, P), t[-1], color=LINE, alpha=0.5, lw=0)
+    axes[0].text(t_rel(clip, 766, P) + 0.03, fs[t < 0].max() * 0.9, "Kirk's hand covers the fold", fontsize=8, color=INK_SOFT)
+    axes[1].set_xlabel("seconds relative to Kirk's first visible movement; dotted lines are the file's keyframes")
+    axes[0].set_xlim(t[0], t[-1])
+    fig.tight_layout()
+    fig.savefig(IMG / "fingers_keyframes_k3.png")
+    plt.close(fig)
+
+
+def cmd_keyframes(a):
+    keyframes()
+
+
 # --------------------------------------------------------------------------- main
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -862,6 +1035,7 @@ def main(argv=None):
     s = sp.add_parser("gridref"); s.add_argument("--clip", required=True, choices=CLIPS); s.add_argument("--traj"); s.add_argument("--frame", type=int, required=True); s.add_argument("--box", type=int, nargs=4, required=True); s.add_argument("--scale", type=float, default=3.0); s.add_argument("--out", required=True); s.set_defaults(f=cmd_gridref)
     s = sp.add_parser("figures"); s.add_argument("--track", action="store_true", help="re-run the template trackers first"); s.set_defaults(f=cmd_figures)
     s = sp.add_parser("gifs"); s.add_argument("--only"); s.set_defaults(f=cmd_gifs)
+    s = sp.add_parser("keyframes"); s.set_defaults(f=cmd_keyframes)
     a = p.parse_args(argv)
     a.f(a)
 

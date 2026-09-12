@@ -93,13 +93,24 @@ going fuzzy and then re-pixelating just before Kirk moves. `fingers_sharpness_k3
 records, for every frame of 7.mp4 from 700 to 790, the Laplacian variance
 (sharpness) of the finger patch and of a background patch, the mean absolute
 frame-to-frame change in the finger patch and in the zone under the left arm,
-and the encoder's frame type from ffprobe. 7.mp4 has an I-frame every 28 frames
-without exception; frame 756, 100 ms before Kirk moves, is one. The finger
-patch's sharpness jump at 756 (1.39x the three frames before) is within the
-range of the other keyframes (0.96-1.59x) and the background jumps with it,
-while the frame-to-frame change in the patch stays at its noise floor until
-Kirk's hand crosses it at +0.23 s. The pixelation is the codec's cycle. It
-neither shows nor excludes a squeeze of the hidden right hand.
+and the encoder's frame type from ffprobe. 7.mp4 has an I-frame every 28 frames from frame 0 to frame 840, a second
+after the shot (the spacing loosens to 26-29 after that); frame 756, 100 ms
+before Kirk moves, is one. `fingers_keyframes_k3.json` (the `keyframes`
+sub-command) is the check that the re-pixelation at 756 is what every
+keyframe does: for every frame from 560 to 790 it records the Laplacian
+variance of the finger patch (the pocket loop's crop, box (-12, 35, 48, 100)
+on the k3blue track) and of a background patch 60 px to its left, and the
+"pop" of each frame, its sharpness over the mean of the three frames before.
+The pop at 756 is 1.44; the seven keyframes from 588 to 756 pop by 1.10-1.52
+(756 ranks third); the 196 predicted frames in the same window pop by 0.96 at
+the median and 1.23 at the 95th percentile, and the only one reaching
+keyframe size is 668, in the lean toward Kirk. The background patch pops at
+the same keyframes by 1.09-1.41. The same command draws `k3_fingers_keyframes.jpg`
+(each keyframe 616-756 with four neighbours either side), the loop
+`closeup_blue_keyframes_v1` (keyframes 644, 700, 728, 756 played in step) and
+`fingers_keyframes_k3.png`. The frame-to-frame change in the patch stays at
+its noise floor until Kirk's hand crosses it at +0.23 s. The pixelation is the
+codec's cycle. It neither shows nor excludes a squeeze of the hidden right hand.
 
 Hand anatomy: the posture description (left side to the camera, arms crossed,
 right hand tucked under the left armpit with fingertips showing) is the brief
