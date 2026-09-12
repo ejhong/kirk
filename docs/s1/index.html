@@ -25,7 +25,7 @@
   <div class="meta"><span><b>Run</b> 11 September 2026 · V3, same day</span><span><b>Inputs</b> 2.MOV · 2.mp4 · 16.mp4 · 7.mp4 from archive.org/kirkshooting</span><span><b>Brief</b> <a href="https://github.com/ejhong/kirk/blob/main/research/s1/brief.md">research/s1/brief.md</a></span><span><b>Code</b> <a href="https://github.com/ejhong/kirk/blob/main/pipeline/s1_video.py">pipeline/s1_video.py</a></span></div>
 </div></header>
 <nav class="toc" aria-label="On this page"><div class="wrap"><ol>
-  <li><a href="#verdict">Finding</a></li><li><a href="#loops">Loops</a></li><li><a href="#timezero">Time zero</a></li><li><a href="#plaid">Plaid shirt</a></li><li><a href="#blue">Blue shirt</a></li><li><a href="#polo">White polo</a></li><li><a href="#material">Material</a></li><li><a href="#supports">What it supports</a></li><li><a href="#correction">V1 → V3</a></li><li><a href="#method">Method</a></li>
+  <li><a href="#verdict">Finding</a></li><li><a href="#loops">Loops</a></li><li><a href="#sources">Sources</a></li><li><a href="#timezero">Time zero</a></li><li><a href="#plaid">Plaid shirt</a></li><li><a href="#blue">Blue shirt</a></li><li><a href="#polo">White polo</a></li><li><a href="#material">Material</a></li><li><a href="#supports">What it supports</a></li><li><a href="#correction">V1 → V3</a></li><li><a href="#method">Method</a></li>
 </ol></div></nav>
 <main id="main">
 
@@ -63,6 +63,71 @@
     <figure class="anim"><div class="frame dark"><video autoplay loop muted playsinline preload="auto" src="img/closeup_blue_hip_v1.mp4" aria-label="Loop of the blue-shirt man in 16.mp4 from 0.2 s before Kirk moves to 1.3 s after: a hand comes out of the fold and goes down to his hip"></video></div><figcaption><b>B · 16.mp4 frames 178–223, every frame, from behind and to his left.</b> Arms crossed through 0; a hand comes out of the fold at +0.70 s (amber, frame 206) and is at the front of his hip by +0.90 s (frame 212), where it stays until the camera drops away at +1.3 s. The brief's author reads this as the right hand putting away what it held under the arm; <a href="#hip">what the frames can and cannot say about that</a>. <a href="img/closeup_blue_hip_v1.gif">GIF</a></figcaption></figure>
   </div>
 </div></section>
+
+<section class="part" id="sources"><div class="wrap">
+  <div class="part-head"><div class="n">Sources</div><h2>The four clips, frame by frame</h2></div>
+  <div class="prose"><p>Every frame on this page comes from one of these files. Drag the slider or use the buttons to step through a clip one frame at a time; the readout gives the frame index used throughout this page and the time relative to Kirk's first abrupt movement in that clip, marked on the slider. The copies here are H.264 re-encodes of the originals for the browser, at the source's own resolution and frame rate, with every frame's timestamp carried over unchanged, so frame 759 here is frame 759 in the file the study measured. The originals are at <a href="https://archive.org/details/kirkshooting">archive.org/details/kirkshooting</a> and are linked under each player. Nothing was cropped, stabilised or slowed; the frames are as the cameras recorded them.</p></div>
+  <div class="players">
+    <figure class="player" data-clip="k3"><div class="frame dark"><video preload="metadata" playsinline src="video/7.mp4.h264.mp4" aria-label="7.mp4, the front camera, full clip"></video></div>
+      <div class="scrub"><input type="range" min="0" max="1" step="1" value="0" aria-label="frame"><span class="mark" title="Kirk's first abrupt movement"></span></div>
+      <div class="ctl"><button data-do="play">play</button><button data-do="-10">−10</button><button data-do="-1">−1</button><button data-do="+1">+1</button><button data-do="+10">+10</button><button data-do="shot">to 0</button><select aria-label="speed"><option value="1">1×</option><option value="0.5">½×</option><option value="0.25">¼×</option></select><span class="ro">frame <b class="f">0</b> · <b class="t">0</b> ms · <span class="s">0.000 s</span></span></div>
+      <figcaption><b>7.mp4 · the front camera, 1080p, 29.97 fps.</b> B (blue shirt) and A2 (white polo) from the front; Kirk first moves at frame 759 (25.31 s). <a href="https://archive.org/download/kirkshooting/7.mp4">original file</a> · <a href="https://archive.org/details/kirkshooting/7.mp4">archive.org player</a></figcaption></figure>
+    <figure class="player" data-clip="k1hq"><div class="frame dark"><video preload="metadata" playsinline src="video/2.MOV.h264.mp4" aria-label="2.MOV, the barrier camera, full clip"></video></div>
+      <div class="scrub"><input type="range" min="0" max="1" step="1" value="0" aria-label="frame"><span class="mark" title="Kirk's first abrupt movement"></span></div>
+      <div class="ctl"><button data-do="play">play</button><button data-do="-10">−10</button><button data-do="-1">−1</button><button data-do="+1">+1</button><button data-do="+10">+10</button><button data-do="shot">to 0</button><select aria-label="speed"><option value="1">1×</option><option value="0.5">½×</option><option value="0.25">¼×</option></select><span class="ro">frame <b class="f">0</b> · <b class="t">0</b> ms · <span class="s">0.000 s</span></span></div>
+      <figcaption><b>2.MOV · the barrier camera, 1080p, 59.94 fps.</b> A (plaid shirt) and A2 (white polo) at the rail, Kirk from behind; Kirk first moves at frame 508 (8.47 s). <a href="https://archive.org/download/kirkshooting/2.MOV">original file</a> · <a href="https://archive.org/details/kirkshooting/2.MOV">archive.org player</a></figcaption></figure>
+    <figure class="player" data-clip="k2"><div class="frame dark"><video preload="metadata" playsinline src="video/16.mp4.h264.mp4" aria-label="16.mp4, the camera behind the blue-shirt man, full clip"></video></div>
+      <div class="scrub"><input type="range" min="0" max="1" step="1" value="0" aria-label="frame"><span class="mark" title="Kirk's first abrupt movement"></span></div>
+      <div class="ctl"><button data-do="play">play</button><button data-do="-10">−10</button><button data-do="-1">−1</button><button data-do="+1">+1</button><button data-do="+10">+10</button><button data-do="shot">to 0</button><select aria-label="speed"><option value="1">1×</option><option value="0.5">½×</option><option value="0.25">¼×</option></select><span class="ro">frame <b class="f">0</b> · <b class="t">0</b> ms · <span class="s">0.000 s</span></span></div>
+      <figcaption><b>16.mp4 · behind and to the left of B, 720×1280, 30 fps.</b> The blue-shirt man from behind, Kirk beyond him; Kirk first moves at frame 185 (6.34 s). <a href="https://archive.org/download/kirkshooting/16.mp4">original file</a> · <a href="https://archive.org/details/kirkshooting/16.mp4">archive.org player</a></figcaption></figure>
+    <figure class="player" data-clip="k1"><div class="frame dark"><video preload="metadata" playsinline src="video/2.mp4.h264.mp4" aria-label="2.mp4, the low-resolution derivative of 2.MOV, full clip"></video></div>
+      <div class="scrub"><input type="range" min="0" max="1" step="1" value="0" aria-label="frame"><span class="mark" title="Kirk's first abrupt movement"></span></div>
+      <div class="ctl"><button data-do="play">play</button><button data-do="-10">−10</button><button data-do="-1">−1</button><button data-do="+1">+1</button><button data-do="+10">+10</button><button data-do="shot">to 0</button><select aria-label="speed"><option value="1">1×</option><option value="0.5">½×</option><option value="0.25">¼×</option></select><span class="ro">frame <b class="f">0</b> · <b class="t">0</b> ms · <span class="s">0.000 s</span></span></div>
+      <figcaption><b>2.mp4 · the 270×480 derivative of 2.MOV, 59.94 fps.</b> The same camera as 2.MOV at low resolution, kept because it is the copy most people have seen; Kirk first moves at frame 508 (8.48 s). <a href="https://archive.org/download/kirkshooting/2.mp4">original file</a> · <a href="https://archive.org/details/kirkshooting/2.mp4">archive.org player</a></figcaption></figure>
+  </div>
+</div></section>
+<script>
+(function () {
+  fetch("video/pts.json").then(function (r) { return r.json(); }).then(function (META) {
+    document.querySelectorAll(".player").forEach(function (fig) {
+      var m = META[fig.dataset.clip]; if (!m) return;
+      var P = m.pts, n = P.length, r = m.reaction, t0 = P[r];
+      var v = fig.querySelector("video"), sl = fig.querySelector("input[type=range]"), mark = fig.querySelector(".mark");
+      var fo = fig.querySelector(".f"), to = fig.querySelector(".t"), so = fig.querySelector(".s");
+      var play = fig.querySelector("[data-do=play]"), speed = fig.querySelector("select");
+      sl.max = n - 1; mark.style.left = (r / (n - 1) * 100) + "%";
+      function frameAt(t) { var lo = 0, hi = n - 1; while (lo < hi) { var mid = (lo + hi + 1) >> 1; if (P[mid] <= t + 1e-4) lo = mid; else hi = mid - 1; } return lo; }
+      function show(i) { fo.textContent = i; var ms = Math.round((P[i] - t0) * 1000); to.textContent = (ms > 0 ? "+" : "") + ms; so.textContent = P[i].toFixed(3) + " s"; sl.value = i; fig.classList.toggle("at0", i === r); }
+      function seek(i) { i = Math.max(0, Math.min(n - 1, i)); var d = (i + 1 < n ? P[i + 1] - P[i] : 1 / 30); v.pause(); v.currentTime = P[i] + d * 0.4; show(i); }
+      sl.addEventListener("input", function () { seek(+sl.value); });
+      fig.querySelectorAll("button[data-do]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          var d = b.dataset.do;
+          if (d === "play") { if (v.paused) v.play(); else v.pause(); }
+          else if (d === "shot") seek(r);
+          else seek(frameAt(v.currentTime) + parseInt(d, 10));
+        });
+      });
+      speed.addEventListener("change", function () { v.playbackRate = +speed.value; });
+      v.addEventListener("play", function () { play.textContent = "pause"; });
+      v.addEventListener("pause", function () { play.textContent = "play"; show(frameAt(v.currentTime)); });
+      v.addEventListener("click", function () { if (v.paused) v.play(); else v.pause(); });
+      function tick() { if (!v.paused) show(frameAt(v.currentTime)); if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(tick); else requestAnimationFrame(tick); }
+      if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(tick); else requestAnimationFrame(tick);
+      v.addEventListener("seeked", function () { show(frameAt(v.currentTime)); });
+      fig.tabIndex = 0;
+      fig.addEventListener("keydown", function (e) {
+        if (e.target.tagName === "SELECT") return;
+        if (e.key === "ArrowLeft") { seek(frameAt(v.currentTime) - (e.shiftKey ? 10 : 1)); e.preventDefault(); }
+        else if (e.key === "ArrowRight") { seek(frameAt(v.currentTime) + (e.shiftKey ? 10 : 1)); e.preventDefault(); }
+        else if (e.key === " ") { if (v.paused) v.play(); else v.pause(); e.preventDefault(); }
+      });
+      v.addEventListener("loadedmetadata", function () { seek(r); });
+      show(0);
+    });
+  });
+})();
+</script>
 
 <section class="part" id="timezero"><div class="wrap">
   <div class="part-head"><div class="n">01</div><h2>Time zero: the frame Kirk first moves, checked three ways</h2></div>
@@ -169,6 +234,7 @@
   <figure class="anim" id="kfcompare"><div class="frame dark"><video autoplay loop muted playsinline preload="auto" src="img/closeup_blue_keyframes_v1.mp4" aria-label="Loop of the same crop under the blue-shirt man's arm at four keyframes of 7.mp4 played in step: 644, 700, 728 and 756"></video></div><figcaption><b>Four keyframes played in step: 644 (−3.8 s), 700 (−2.0 s), 728 (−1.0 s) and 756 (−0.1 s), each with ten frames either side, the same crop at 6×.</b> The keyframe is the outlined frame and the amber mark on each timeline; the fingers re-pixelate in all four panels at the same moment. At 700 the fold is seen just after his lean, and at 728 Kirk's microphone hand is passing on the right. <a href="img/closeup_blue_keyframes_v1.gif">GIF</a></figcaption></figure>
   <figure class="strip"><div class="frame"><a href="img/k3_fingers_keyframes.jpg" style="border:0"><img src="img/k3_fingers_keyframes.jpg" alt="Six rows: the finger patch at keyframes 616, 644, 672, 700, 728 and 756 of 7.mp4, each with four frames either side at 6x, the keyframe outlined and every frame labelled with its encoder type" loading="lazy"></a></div><figcaption><b>Every keyframe from 616 (−4.8 s) to 756 (−0.1 s), with four frames either side, the same crop at 6×.</b> One row per keyframe, the keyframe outlined in amber; each frame carries its index, time and encoder type. The row at 672 falls in his lean toward Kirk, which is why its neighbours differ from each other. Click for the full-size sheet.</figcaption></figure>
   <figure class="strip"><div class="frame"><img src="img/fingers_keyframes_k3.png" alt="Sharpness of the finger patch and of a background patch at every frame of 7.mp4 from 6.6 s before Kirk moves to 1 s after, with the keyframes dotted" loading="lazy"></div><figcaption><b>Sharpness at every frame from −6.6 s to +1.0 s, finger patch above, background patch below; dotted lines are the file's keyframes.</b> Both series spike at the keyframes and decay through the predicted frames between them. The rise in the finger patch from −3 to −2 s is his lean, when the crop's contents change; the shaded band is where Kirk's hand covers the fold. Numbers in <code>data/s1/fingers_keyframes_k3.json</code>.</figcaption></figure>
+  <figure class="film" id="michand"><div class="frame dark"><a href="img/k3blue_michand.jpg" style="border:0"><img src="img/k3blue_michand.jpg" alt="Frames 708 to 737 of 7.mp4, every frame, a wider crop on the blue-shirt man: Kirk's right hand holding the microphone passes in front of the fold" loading="lazy"></a></div><figcaption><b>7.mp4, frames 708–737, every frame (−1.70 to −0.73 s), a wider crop.</b> The hand that moves in front of the fold in this window is Kirk's right hand holding the microphone: it is continuous with his forearm coming up from the lower right, the grey ball at the top of the fist is the microphone head, and it is in front of the blue-shirt man's forearm. Kirk lowers it from 710, holds it low from about 716 to 727 and raises it again from 728. The blue-shirt man's visible fingertips under his forearm do not move through the window. This is the passage the sharpness and motion plots label as Kirk's microphone hand at −1.0 s, and it is the hand at the right edge of the 728 panel in the loop above.</figcaption></figure>
   <figure class="strip"><div class="frame"><img src="img/pocket_sharpness_k3.png" alt="Sharpness of the finger patch and a background patch per frame, with keyframes dotted, and frame-to-frame change in the finger patch and in the zone under the left arm" loading="lazy"></div><figcaption><b>Sharpness and change, frame by frame.</b> Top: sharpness in the visible-finger patch and in a background patch; every dotted line is a keyframe and both series jump at each. Bottom: frame-to-frame change in the finger patch and in the zone under the left arm; the finger patch is flat from −0.37 s until Kirk's hand crosses it at +0.23 s, and the left-armpit zone moves only when Kirk's shoulder beside it does, at 0. The episodes at −2.9 to −1.9 s are his lean toward Kirk; −1.0 and −0.45 s are Kirk's microphone hand passing.</figcaption></figure>
   <figure class="film"><div class="frame dark tall"><a href="img/k3blue_shot.jpg" style="border:0"><img src="img/k3blue_shot.jpg" alt="Frames 745 to 776 of 7.mp4, every frame, the blue-shirt man stabilised at 3x" loading="lazy"></a></div><figcaption><b>7.mp4, frames 745–776, every frame, 3×.</b> The fold through Kirk's first movement at 759 (red) and his snap at 770.</figcaption></figure>
   <figure class="film"><div class="frame dark tall"><a href="img/k3blue_fist.jpg" style="border:0"><img src="img/k3blue_fist.jpg" alt="Frames 772 to 810 of 7.mp4, every second frame, magnified 5x on the right hand" loading="lazy"></a></div><figcaption><b>7.mp4, frames 772–810, every second frame, 5×.</b> The right hand at its largest: a closed fist.</figcaption></figure>
@@ -261,7 +327,7 @@
     <p>V1 took the loudest transient in each file as the shot and checked it only against Kirk's microphone hand dropping in 2.MOV. In 2.MOV the loudest transient is a crowd burst at 6.42 s; the microphone lowering a few frames later was Kirk lowering the microphone, not a reaction. Both readings were wrong in the same direction, and the second was taken as confirming the first. The brief's author pointed out that the sleeve contact visibly precedes the shot and that a microphone drop is an unreliable anchor. Cross-correlating the clips' audio showed that 2.MOV's 6.42 s corresponds to 23.35 s in 7.mp4, where nothing happens to Kirk, and that the shot in 2.MOV is at about 8.7 s. Kirk's head snap at frame 520 and the blue-shirt man's fist in the 2.MOV foreground at frames 548–556 both confirmed it without sound.</p>
     <p><b>V2 → V3, same day.</b> V2 marked Kirk's larger backward snap of the head as zero. The brief's author pointed out that the mark sat late against the first jerk of Kirk's head and shoulders, which is visible 0.2 s earlier in 2.MOV (frame 508), 0.27 s earlier in 16.mp4 (185) and 0.37 s earlier in 7.mp4 (759). Those first movements agree with the audio alignment between clips to 0.05 s, better than the snap did, and they sit 50 to 70 ms before the first impulse reaches the nearest cameras. Every time on this page is now relative to the first movement; the snap is listed beside it.</p>
     <p>Consequences of V2: the plaid-shirt man's finding is reversed; the blue-shirt man's timing in 16.mp4 moves from "unfolds 1.7 s after" to "unfolds 0.17 s after", which now agrees with 7.mp4; the anchor in every clip is Kirk's visible movement rather than a sound; and the editor's note on <a href="../s2/index.html">study 02</a>, which had faulted that review's timing, is withdrawn: the review's zero for 2.MOV (8.35 s) was 0.3 s early, not 1.9 s late, and its conclusion about the order of events was right. V1's text is kept in the repository history.</p>
-    <p><b>V3.1 → V3.2, the next day.</b> V3.1 attributed the re-pixelation of the tucked fingers at −0.10 s to an encoder keyframe. The brief's author asked to see the same artifact at other keyframes so the attribution could be judged rather than taken on trust. The comparison sheet, the four-panel loop and the full-window sharpness plot in <a href="#kfcompare">the blue-shirt section</a> were added, and the pop at 756 is now measured against every keyframe from −5.7 s and every predicted frame in the same window, on one crop and one formula, which replaced the earlier figures (1.39 against 0.96 to 1.59).</p>
+    <p><b>V3.1 → V3.2, the next day.</b> V3.1 attributed the re-pixelation of the tucked fingers at −0.10 s to an encoder keyframe. The brief's author asked to see the same artifact at other keyframes so the attribution could be judged rather than taken on trust. The comparison sheet, the four-panel loop and the full-window sharpness plot in <a href="#kfcompare">the blue-shirt section</a> were added, and the pop at 756 is now measured against every keyframe from −5.7 s and every predicted frame in the same window, on one crop and one formula, which replaced the earlier figures (1.39 against 0.96 to 1.59). The four source clips were added to the page with a frame-by-frame scrubber (<a href="#sources">Sources</a>), and a wider strip of frames 708 to 737 was added to show that the hand moving in front of the blue-shirt man's fold at −1.6 to −0.9 s is Kirk's microphone hand.</p>
   </div>
 </div></section>
 
@@ -277,7 +343,8 @@ python pipeline/s1_video.py audio                 # data/s1/audio.json: impulses
 python pipeline/s1_video.py sync                  # data/s1/sync.json: cross-clip lags vs the video anchors
 python pipeline/s1_video.py figures --track       # trajectories, motion series, every strip
 python pipeline/s1_video.py gifs                  # the loops
-python pipeline/s1_video.py keyframes             # the keyframe comparison: sheet, loop, sharpness</code></pre>
+python pipeline/s1_video.py keyframes             # the keyframe comparison: sheet, loop, sharpness
+python pipeline/s1_video.py web                   # docs/s1/video: H.264 copies of the clips for the frame scrubber</code></pre>
     <p>Data: <code>data/s1/timing.json</code>, <code>audio.json</code>, <code>sync.json</code>, <code>traj_*.json</code>, <code>motion_*.csv</code>, <code>motion_summary.json</code>. Inputs and checksums: <code>inputs/</code>.</p>
   </div>
   <aside>

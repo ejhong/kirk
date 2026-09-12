@@ -35,6 +35,8 @@ $P pipeline/s1_video.py audio                     # data/s1/audio.json: impulses
 $P pipeline/s1_video.py sync                      # data/s1/sync.json: cross-clip lags vs the video anchors
 $P pipeline/s1_video.py figures --track           # trajectories, motion series and every strip on the study page
 $P pipeline/s1_video.py gifs                      # the looping animations (subject · Kirk · audio timeline)
+$P pipeline/s1_video.py keyframes                 # the keyframe comparison for the blue-shirt man's fingers
+$P pipeline/s1_video.py web                       # docs/s1/video: H.264 copies of the clips for the page's scrubber
 python3 -m http.server 4173 --bind 127.0.0.1 --directory docs
 ```
 
@@ -48,7 +50,7 @@ Open `http://127.0.0.1:4173/`. Extracting `2.MOV` at 1080p writes about
 inputs/                       Original supplied material; preserve untouched
   README.md                   Provenance of each clip and what its container says
   fetch.sh, kirkshooting/     Download script and SHA-256 checksums (the videos are not committed)
-pipeline/s1_video.py          extract · timing · audio · sync · track · strip · motion · gridref · figures · gifs
+pipeline/s1_video.py          extract · timing · audio · sync · track · strip · motion · gridref · figures · gifs · keyframes · web
 pipeline/assets/              DejaVu Sans for the animation labels, with its licence
 data/s1/                      timing.json, audio.json, traj_*.json, motion_*.csv, motion_summary.json
 research/                     investigations.json, per-study brief and method; s2/astra-package is study 02 as delivered

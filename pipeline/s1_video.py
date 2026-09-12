@@ -15,6 +15,7 @@ produced by `figures`, every number by `timing`, `audio` and `motion`.
     figures  the whole manifest of strips, motion plots and orientation frames
     gifs     looping animations: stabilised subject, Kirk, and the audio timeline
     keyframes  the finger patch at every keyframe of 7.mp4 beside the one before the shot: sheet, loop, sharpness
+    web      browser-playable H.264 copies of the four clips, timestamps passed through, for the page's scrubber
 
 Frame index i is zero-based; frame files are named f{i+1:05d}.png. Times are
 the frame's presentation timestamp (PTS) from ffprobe, not i / fps, so the
@@ -503,6 +504,8 @@ MOTION = [
 ]
 
 STRIPS = [
+    # Kirk's microphone hand passing in front of the blue-shirt man's fold at -1.6 to -0.9 s (V3.2, asked about as "hand movement near 720")
+    ("k3blue_michand.jpg", "k3", "k3blue", 708, 738, 1, (-40, -30, 110, 130), 2.4, 10),
     # out, clip, traj, start, end, step, box (rel.), scale, cols (ignored: published strips are single rows)
     ("k1polo_ear.jpg", "k1hq", "k1polo", 212, 264, 2, (60, 40, 330, 460), 0.62, 13),
     ("k1polo_shot.jpg", "k1hq", "k1polo", 440, 584, 4, (-20, -40, 330, 460), 0.5, 12),
@@ -1021,6 +1024,38 @@ def cmd_keyframes(a):
     keyframes()
 
 
+# --------------------------------------------------------------------------- web copies of the sources
+VIDEO = ROOT / "docs" / "s1" / "video"
+
+
+def web_sources(crf=26):
+    """Browser-playable copies of the four clips for the page's scrubber: H.264 at the source's own
+    resolution and frame rate, every timestamp passed through unchanged (so frame i on the page is frame i
+    here), a keyframe every 15 frames for accurate seeking, AAC audio. Writes video/pts.json with each
+    copy's per-frame timestamps and the page's anchor frame, taken from the copy itself by ffprobe."""
+    VIDEO.mkdir(parents=True, exist_ok=True)
+    meta = {}
+    for clip, c in CLIPS.items():
+        out = VIDEO / f"{c['file']}.h264.mp4"
+        if not out.exists():
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(clip_file(clip)), "-map", "0:v:0", "-map", "0:a:0?",
+                            "-fps_mode", "passthrough", "-enc_time_base", "-1", "-video_track_timescale", "60000", "-c:v", "libx264", "-preset", "slow", "-crf", str(crf), "-g", "15", "-pix_fmt", "yuv420p",
+                            "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", str(out)], check=True)
+        probe = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "frame=pts_time", "-of", "csv=p=0", str(out)],
+                               capture_output=True, text=True, check=True).stdout
+        P = [round(float(l.split(",")[0]), 4) for l in probe.splitlines() if l.strip()]
+        src = pts(clip)
+        if len(P) != len(src) or max(abs(a - b) for a, b in zip(P, src)) > 0.002:
+            raise SystemExit(f"{out.name}: timestamps differ from the source ({len(P)} vs {len(src)} frames)")
+        meta[clip] = {"file": out.name, "label": c["label"], "reaction": REACTION[clip], "snap": SNAP[clip], "pts": P}
+        print(out.name, len(P), "frames", f"{out.stat().st_size / 1e6:.1f} MB")
+    (VIDEO / "pts.json").write_text(json.dumps(meta, separators=(",", ":")))
+
+
+def cmd_web(a):
+    web_sources()
+
+
 # --------------------------------------------------------------------------- main
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -1036,6 +1071,7 @@ def main(argv=None):
     s = sp.add_parser("figures"); s.add_argument("--track", action="store_true", help="re-run the template trackers first"); s.set_defaults(f=cmd_figures)
     s = sp.add_parser("gifs"); s.add_argument("--only"); s.set_defaults(f=cmd_gifs)
     s = sp.add_parser("keyframes"); s.set_defaults(f=cmd_keyframes)
+    s = sp.add_parser("web"); s.set_defaults(f=cmd_web)
     a = p.parse_args(argv)
     a.f(a)
 
