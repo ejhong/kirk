@@ -28,23 +28,25 @@ Decisions taken from the result:
 
 ## 2. Time zero
 
-t = 0 in each clip is the first frame in which Kirk's head visibly snaps back,
-read by eye from per-frame crops and recorded in `REACTION` in the script:
-2.MOV frame 520 (8.673 s), 16.mp4 frame 193 (6.606 s), 7.mp4 frame 770
-(25.673 s). Two checks tie the three anchors together without relying on
-any one of them:
+t = 0 in each clip is the first frame in which Kirk's head and shoulders move
+abruptly, read by eye from per-frame crops and per-frame head-region
+differences, and recorded in `REACTION` in the script: 2.MOV frame 508
+(8.473 s), 16.mp4 frame 185 (6.339 s), 7.mp4 frame 759 (25.306 s). A larger
+backward snap of the head follows 0.2-0.37 s later (`SNAP`: 520, 193, 770);
+V2 of the study used the snap and was 0.2-0.37 s late. Two checks tie the
+three anchors together without relying on any one of them:
 
 - `sync` cross-correlates the clips' 1 ms log-envelopes (high-passed at 2 s)
   over windows of speech and crowd noise that contain no shot. The lag with
   the strongest correlation is used; carrying 7.mp4's anchor across it
-  predicts the anchor in 2.MOV within 0.12 s and in 16.mp4 within 0.08 s.
+  predicts the anchor in 2.MOV within 0.05 s and in 16.mp4 within 0.02 s.
 - The blue-shirt man stands in the right foreground of 2.MOV; the fist he
-  raises at +0.10 to +0.47 s in 7.mp4 appears in 2.MOV at +0.47 to +0.60 s.
+  raises at +0.47 to +0.83 s in 7.mp4 appears in 2.MOV at +0.67 to +0.80 s.
 
 `audio` then lists the impulses in each file within 1.5 s before and 1 s
 after the anchor (local maxima of the 1 ms envelope more than four times the
-window's median). The same three impulses precede the anchor in all three
-files. Which is the muzzle report and which the bullet's crack is not decided.
+window's median). The same three impulses sit in the same places relative to the anchor in all
+three files, the first of them 50-70 ms after it at the two cameras nearest Kirk. Which is the muzzle report and which the bullet's crack is not decided.
 
 V1 of the study used the loudest transient in each file as t = 0 and checked
 it only against Kirk's microphone hand in 2.MOV. In 2.MOV the loudest

@@ -47,12 +47,13 @@ CLIPS = {
     "k3": {"file": "7.mp4", "label": "7.mp4", "fps": 30000 / 1001},
 }
 
-# t = 0 reference per clip: the first frame in which Kirk visibly moves in
-# response to the shot (head snaps back), read from the frames themselves.
-# This is a video-only anchor; the audio impulses are reported relative to it.
-# V1 of this study anchored on the loudest audio transient in each file, which
-# in 2.MOV (6.42 s) was crowd noise, not the shot; see data/s1/sync.json.
-REACTION = {"k1hq": 520, "k1": 520, "k2": 193, "k3": 770}
+# t = 0 reference per clip: the first frame in which Kirk's head and shoulders
+# move abruptly, read from the frames themselves. A larger backward snap of the
+# head follows 0.2-0.37 s later (SNAP). This is a video-only anchor; the audio
+# impulses are reported relative to it. V1 anchored on the loudest audio
+# transient per file (in 2.MOV a crowd burst 2 s early); V2 on the later snap.
+REACTION = {"k1hq": 508, "k1": 508, "k2": 185, "k3": 759}
+SNAP = {"k1hq": 520, "k1": 520, "k2": 193, "k3": 770}
 
 
 def T0_of(clip):
@@ -368,7 +369,7 @@ def strip(clip, traj, start, end, step, box, scale, cols, out, quality=88):
         bar = np.full((22, c.shape[1], 3), (29, 20, 13), np.uint8)  # dossier blue-black, BGR
         col = (160, 172, 216) if ms < 0 else (216, 172, 133)
         if i == REACTION[clip]:
-            col = (60, 60, 230)  # the frame in which Kirk first visibly moves
+            col = (60, 60, 230)  # the frame in which Kirk first moves abruptly
         cv2.putText(bar, f"{i}  {ms:+.0f} ms", (4, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.46, col, 1, cv2.LINE_AA)
         ims.append(np.vstack([bar, c]))
     rows = [np.hstack(ims[i: i + cols]) for i in range(0, len(ims), cols)]
@@ -523,9 +524,9 @@ STRIPS = [
     ("k2blue_pocket.jpg", "k2", "k2blue", 176, 210, 1, (-5, 50, 70, 125), 5.0, 10),
     ("k2blue_baseline.jpg", "k2", "k2blue", 0, 206, 4, (-30, -25, 110, 165), 2.0, 13),
     ("k2blue_after.jpg", "k2", "k2blue", 190, 228, 1, (-30, -25, 140, 175), 2.0, 11),
-    ("k1_reaction.jpg", "k1hq", None, 512, 528, 1, (120, 400, 520, 800), 0.7, 13),
-    ("k2_reaction.jpg", "k2", None, 187, 200, 1, (430, 500, 580, 680), 2.0, 10),
-    ("k3_reaction.jpg", "k3", None, 764, 775, 1, (1000, 540, 1130, 700), 2.2, 11),
+    ("k1_reaction.jpg", "k1hq", None, 498, 524, 1, (100, 420, 520, 1000), 0.55, 13),
+    ("k2_reaction.jpg", "k2", None, 178, 196, 1, (430, 500, 580, 680), 2.0, 10),
+    ("k3_reaction.jpg", "k3", None, 752, 774, 1, (1000, 540, 1130, 700), 2.2, 11),
 ]
 
 
@@ -637,30 +638,27 @@ GIFS = [
     ("k1tan.gif", "k1hq", "k1tan", 440, 600, 2, (-30, -80, 320, 240), "A · plaid shirt, stabilised",
      (120, 400, 520, 900), None, 10, [
          (440, "both hands on the barrier rail"), (490, "right hand rises across the chest"),
-         (496, "index finger on the left sleeve"), (520, "Kirk's head snaps back"), (534, "Kirk's hands rise; hand stays on the sleeve"),
-         (556, "fingers curl; crowd ducks")]),
+         (496, "index finger on the left sleeve"), (508, "Kirk's head and shoulders jerk"), (520, "Kirk's head snaps back"),
+         (534, "Kirk's hands rise; hand stays on the sleeve"), (556, "fingers curl; crowd ducks")]),
     ("k1polo.gif", "k1hq", "k1polo", 420, 600, 3, (-20, -40, 330, 460), "A2 · white polo, stabilised",
      (120, 400, 520, 900), None, 10, [
-         (420, "phone held at the left shoulder"), (520, "Kirk's head snaps back"), (560, "phone lowered")]),
+         (420, "phone held at the left shoulder"), (508, "Kirk's head and shoulders jerk"), (560, "phone lowered")]),
     ("k3blue.gif", "k3", "k3blue", 730, 812, 1, (-10, -20, 80, 120), "B · blue shirt, stabilised",
      (1000, 540, 1130, 700), 778, 8, [
-         (730, "arms folded, right hand under the left arm"), (766, "Kirk's hand rises in front of the fold"),
-         (770, "Kirk's head snaps back"), (773, "right hand emerges as a fist"), (790, "turns toward Kirk")]),
+         (730, "arms folded, right hand under the left arm"), (759, "Kirk's head turns abruptly"),
+         (766, "Kirk's hand rises in front of the fold"), (770, "Kirk's head snaps back"), (773, "right hand emerges as a fist"), (790, "turns toward Kirk")]),
     ("k2blue.gif", "k2", "k2blue", 150, 226, 1, (-30, -25, 140, 175), "B · blue shirt, stabilised",
      (430, 520, 560, 660), None, 8, [
-         (150, "arms folded, seen from behind"), (193, "Kirk's head snaps back"), (198, "turns and unfolds; hands go down"),
-         (206, "steps toward Kirk")]),
+         (150, "arms folded, seen from behind"), (185, "Kirk's head turns abruptly"), (193, "Kirk's head snaps back"),
+         (198, "turns and unfolds; hands go down"), (206, "steps toward Kirk")]),
 ]
 
 # Close-up loops: nothing on the frame but the subject; a thin timeline underneath with one mark, the frame in which Kirk visibly moves.
 CLOSEUPS = [
-    # out, clip, traj, start, end, box (rel.), scale, playback fps
-    ("closeup_plaid.gif", "k1hq", "k1tan", 478, 560, (30, -60, 310, 220), 1.15, 15),
-    ("closeup_plaid_sleeve.gif", "k1hq", "k1tan", 484, 540, (120, -50, 310, 170), 2.0, 12),
-    ("closeup_blue_front.gif", "k3", "k3blue", 748, 792, (-10, -20, 80, 120), 3.2, 8),
-    ("closeup_blue_pocket.gif", "k3", "k3blue", 748, 784, (-12, 35, 48, 100), 6.5, 6),
-    ("closeup_blue_back.gif", "k2", "k2blue", 172, 222, (-30, -25, 140, 175), 2.2, 8),
-    ("closeup_blue_back_pocket.gif", "k2", "k2blue", 176, 212, (-5, 50, 70, 125), 5.0, 6),
+    # out, clip, traj, start, end, subject box (rel.), scale, playback fps, Kirk panel box (absolute) or None
+    ("closeup_plaid_kirk.gif", "k1hq", "k1tan", 470, 562, (30, -60, 310, 220), 1.15, 15, (110, 420, 520, 1000)),
+    ("closeup_blue_front.gif", "k3", "k3blue", 740, 792, (-10, -20, 80, 120), 3.2, 8, None),
+    ("closeup_blue_pocket.gif", "k3", "k3blue", 740, 784, (-12, 35, 48, 100), 6.5, 6, None),
 ]
 
 
@@ -770,8 +768,8 @@ def gif(out, clip, traj, start, end, step, sbox, slabel, kbox, kblack, fps_play,
     print(out.name, len(frames), "frames", f"gif {out.stat().st_size / 1e6:.1f} MB", f"mp4 {out.with_suffix('.mp4').stat().st_size / 1e6:.2f} MB")
 
 
-def closeup(out, clip, traj, start, end, box, scale, fps_play):
-    """A loop of the subject alone. The only annotation is a timeline under the frame with a mark at Kirk's first visible movement."""
+def closeup(out, clip, traj, start, end, box, scale, fps_play, kirk_box=None):
+    """A loop of the subject alone (optionally with Kirk beside him). The only annotation is a timeline under the frame with a mark at Kirk's first abrupt movement."""
     import cv2
     import numpy as np
     from PIL import Image, ImageDraw
@@ -789,6 +787,11 @@ def closeup(out, clip, traj, start, end, box, scale, fps_play):
             continue
         c = crop_rel(im, T[i][0], T[i][1], box)
         c = cv2.resize(c, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
+        if kirk_box is not None:
+            kx0, ky0, kx1, ky1 = kirk_box
+            k = im[ky0:ky1, kx0:kx1]
+            k = cv2.resize(k, (int(k.shape[1] * c.shape[0] / k.shape[0]), c.shape[0]), interpolation=cv2.INTER_AREA)
+            c = np.hstack([c, np.full((c.shape[0], 8, 3), (29, 20, 13), np.uint8), k])
         W, H = c.shape[1], c.shape[0]
         bar = 34
         canvas = Image.new("RGB", (W, H + bar), (13, 20, 29))

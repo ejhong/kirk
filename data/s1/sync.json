@@ -33,10 +33,10 @@
       ],
       "lag_s": -16.879,
       "lag_window": "speech before the shot",
-      "reaction_ref_s": 25.673333,
-      "predicted_reaction_in_target_s": 8.794,
-      "video_reaction_in_target_s": 8.673333,
-      "video_minus_audio_prediction_s": -0.121
+      "reaction_ref_s": 25.306667,
+      "predicted_reaction_in_target_s": 8.428,
+      "video_reaction_in_target_s": 8.473333,
+      "video_minus_audio_prediction_s": 0.046
     },
     "k3->k2": {
       "windows": [
@@ -61,10 +61,10 @@
       ],
       "lag_s": -18.986,
       "lag_window": "speech before the shot",
-      "reaction_ref_s": 25.673333,
-      "predicted_reaction_in_target_s": 6.687,
-      "video_reaction_in_target_s": 6.605644,
-      "video_minus_audio_prediction_s": -0.082
+      "reaction_ref_s": 25.306667,
+      "predicted_reaction_in_target_s": 6.321,
+      "video_reaction_in_target_s": 6.338911,
+      "video_minus_audio_prediction_s": 0.018
     }
   }
 }

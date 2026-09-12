@@ -5,7 +5,7 @@
     {
       "id": "s1",
       "number": "01",
-      "kind": "Frame-level video analysis · three cameras, one camera original · V2",
+      "kind": "Frame-level video analysis · three cameras, one camera original · V3",
       "title": "Two gestures before the shot",
       "question": "Did two men on the security line press something in the seconds before the shot, and try to hide it?",
       "page": "docs/s1/index.html",
@@ -16,8 +16,8 @@
         "inputs/kirkshooting/7.mp4"
       ],
       "pipeline": "pipeline/s1_video.py",
-      "finding": "Zero is the frame in which Kirk's head snaps back (2.MOV 520, 16.mp4 193, 7.mp4 770), tied across the clips by their shared sound to about 0.1 s. The plaid-shirt man's right hand leaves the barrier rail 0.50 s before that frame and his index finger is on his left sleeve 0.40 s before it; no button, strap or device resolves at 1080p. The blue-shirt man's arms stay folded through it with the right hand hidden; Kirk's own arm covers the fold for the last 0.16 s and the right fist emerges 0.10 s after. The white-polo man first taken for the sleeve-scratcher is holding a phone.",
-      "limitations": "A hand out of view cannot be shown still. The anchor is a human reading of one frame per clip, checked by audio alignment to about 0.1 s and by a second person's movement. The plaid-shirt man is seen from one camera. No blinded rating was run; purpose is not addressed.",
+      "finding": "Zero is the first frame in which Kirk's head and shoulders move abruptly (2.MOV 508, 16.mp4 185, 7.mp4 759), tied across the clips by their shared sound to 0.05 s; a larger head snap follows 0.2-0.37 s later. The plaid-shirt man's right hand leaves the barrier rail 0.30 s before that frame and his index finger is on his left sleeve 0.20 s before it, 50 ms before the first sound reaches that camera; no button, strap or device resolves at 1080p. The blue-shirt man's arms stay folded through it with the right hand hidden; the pocket under his arm is unchanged for 0.2 s after, then covered by Kirk's rising hand; the right fist emerges 0.47 s after. The white-polo man first taken for the sleeve-scratcher is holding a phone.",
+      "limitations": "A hand out of view cannot be shown still. The anchor is a human reading of one frame per clip, checked by audio alignment to about 0.05 s and by a second person's movement. The plaid-shirt man is seen from one camera. No blinded rating was run; purpose is not addressed.",
       "levels": {
         "observable_movement": "yes, catalogued per frame for every hand in view",
         "identifiable_action": "white-polo man: a phone; plaid-shirt man: none resolved (a finger on cloth); blue-shirt man: hand occluded, not observable",
@@ -34,6 +34,11 @@
           "label": "V2",
           "date": "2026-09-11",
           "note": "Anchored on Kirk's first visible movement per clip, cross-checked by audio cross-correlation between clips and by the blue-shirt man's movement in the 2.MOV foreground. Close-up loops added."
+        },
+        {
+          "label": "V3",
+          "date": "2026-09-11",
+          "note": "Anchor moved from Kirk's larger head snap to his first abrupt head-and-shoulder movement, 0.2-0.37 s earlier, at the brief author's prompting; agrees with the audio alignment to 0.05 s and with study 02's markers to a few frames. Close-up loops reduced to three, the plaid loop with Kirk beside him."
         }
       ]
     },
@@ -49,7 +54,7 @@
         "inputs/astra/Kirk_video_review_GitHub.zip"
       ],
       "package": "research/s2/astra-package",
-      "finding": "Same frames, same observations. The review confirms sleeve contact at frames 487–492 of 2.MOV before Kirk's visible reaction and unfolding at 199–202 of 16.mp4 after it, resolves no control or object, and finds the folded posture 21 s earlier. Its zero in each file is about 0.3 s before the head snap study 01 V2 uses; the order it reports is unaffected. Study 01 V1 disputed its zero and was wrong.",
+      "finding": "Same frames, same observations. The review confirms sleeve contact at frames 487-492 of 2.MOV before Kirk's first movement and unfolding at 199-202 of 16.mp4 after it, resolves no control or object, and finds the folded posture 21 s earlier. Its zero in each file is within a few frames of study 01 V3's; study 01's first two versions disputed it and were wrong.",
       "limitations": "Frame brackets chosen by the reviewing model, no audio reference, no blinded rating. Reproduced in the review's own words; the editor's note was rewritten with study 01 V2 and the earlier note withdrawn.",
       "status": "published",
       "versions": [
