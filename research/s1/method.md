@@ -101,14 +101,15 @@ while the frame-to-frame change in the patch stays at its noise floor until
 Kirk's hand crosses it at +0.23 s. The pixelation is the codec's cycle. It
 neither shows nor excludes a squeeze of the hidden right hand.
 
-Hand anatomy: in the close-up segment (frames 100-140, from his right side) the
-right forearm lies on top and the tucked hand's fingers show under the far
-upper arm. In the wide shot at the shot the fingers of one tucked hand show
-under his upper arm at the near side of his torso; whether they are the right
-hand's (the claim) or the left's is not settled from that angle. The hand that
-emerges afterwards is the right one (2.MOV, from behind, shows the right arm
-rising at +0.67 s); it rises to his mouth and chin by +0.8 s, and nothing in
-the fist resolves at 9x.
+Hand anatomy: the posture description (left side to the camera, arms crossed,
+right hand tucked under the left armpit with fingertips showing) is the brief
+author's reading of the frames at speed and is adopted; the frame analysis,
+from crops about forty pixels wide, could not confirm which hand on its own
+and does not contradict it. The close-up segment (frames 100-140) shows the
+right forearm on top of the fold, consistent with it. The hand that emerges
+afterwards is the right one (2.MOV, from behind, shows the right arm rising at
++0.67 s); it rises to his mouth and chin by +0.8 s, and nothing in the fist
+resolves at 9x.
 
 ## 7. What was not done
 
