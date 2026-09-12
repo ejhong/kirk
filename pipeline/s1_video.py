@@ -655,10 +655,10 @@ GIFS = [
 
 # Close-up loops: nothing on the frame but the subject; a thin timeline underneath with one mark, the frame in which Kirk visibly moves.
 CLOSEUPS = [
-    # out, clip, traj, start, end, subject box (rel.), scale, playback fps, Kirk panel box (absolute) or None
-    ("closeup_plaid_kirk_v3.gif", "k1hq", "k1tan", 470, 562, (30, -60, 310, 220), 1.15, 15, (110, 420, 520, 1000)),
-    ("closeup_blue_front_v3.gif", "k3", "k3blue", 740, 792, (-10, -20, 80, 120), 3.2, 8, None),
-    ("closeup_blue_pocket_v3.gif", "k3", "k3blue", 740, 784, (-12, 35, 48, 100), 6.5, 6, None),
+    # out, clip, traj, start, end, subject box (rel.), scale, playback fps, Kirk panel box (absolute) or None, extra marks
+    ("closeup_plaid_kirk_v4.gif", "k1hq", "k1tan", 470, 562, (30, -60, 310, 220), 1.15, 15, (110, 420, 520, 1000), ((496, "finger on sleeve"),)),
+    ("closeup_blue_front_v3.gif", "k3", "k3blue", 740, 792, (-10, -20, 80, 120), 3.2, 8, None, ()),
+    ("closeup_blue_pocket_v4.gif", "k3", "k3blue", 740, 784, (-12, 35, 48, 100), 6.5, 6, None, ((756, "keyframe 756"),)),
 ]
 
 
@@ -768,7 +768,7 @@ def gif(out, clip, traj, start, end, step, sbox, slabel, kbox, kblack, fps_play,
     print(out.name, len(frames), "frames", f"gif {out.stat().st_size / 1e6:.1f} MB", f"mp4 {out.with_suffix('.mp4').stat().st_size / 1e6:.2f} MB")
 
 
-def closeup(out, clip, traj, start, end, box, scale, fps_play, kirk_box=None):
+def closeup(out, clip, traj, start, end, box, scale, fps_play, kirk_box=None, marks=()):
     """A loop of the subject alone (optionally with Kirk beside him). The only annotation is a timeline under the frame with a mark at Kirk's first abrupt movement."""
     import cv2
     import numpy as np
@@ -797,12 +797,19 @@ def closeup(out, clip, traj, start, end, box, scale, fps_play, kirk_box=None):
         canvas = Image.new("RGB", (W, H + bar), (13, 20, 29))
         canvas.paste(Image.fromarray(cv2.cvtColor(c, cv2.COLOR_BGR2RGB)), (0, 0))
         d = ImageDraw.Draw(canvas)
+        if marks:  # a label strip above the bar for the extra marks
+            d.rectangle((0, H - 14, W, H), fill=(13, 20, 29))
         # timeline: start..end mapped to the width; mark at the reaction frame; cursor at the current frame
         xr = int((P[r] - P[idx[0]]) / (P[idx[-1]] - P[idx[0]]) * (W - 1))
         xc = int((P[i] - P[idx[0]]) / (P[idx[-1]] - P[idx[0]]) * (W - 1))
         d.line((0, H + 12, W, H + 12), fill=(37, 50, 71), width=2)
         d.line((xr, H + 3, xr, H + 21), fill=(92, 100, 160), width=3)
         d.text((min(max(xr + 5, 2), W - 70), H + 20), "Kirk moves", font=f_small, fill=(160, 172, 216))
+        for mf, mlabel in marks:  # extra marks: (frame, label), drawn in the accent colour above the bar
+            xm = int((P[mf] - P[idx[0]]) / (P[idx[-1]] - P[idx[0]]) * (W - 1))
+            d.line((xm, H + 3, xm, H + 21), fill=(216, 172, 133), width=3)
+            tw = d.textlength(mlabel, font=f_small)
+            d.text((min(max(xm - tw // 2, 2), W - tw - 2), H + 2 - 14), mlabel, font=f_small, fill=(216, 172, 133))
         d.line((xc, H + 5, xc, H + 19), fill=(216, 172, 133), width=3)
         ms = (P[i] - P[r]) * 1000
         d.text((4, H + 20), f"{ms:+.0f} ms", font=f_small, fill=(216, 172, 133) if i == r else (128, 147, 171))

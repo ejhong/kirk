@@ -86,7 +86,27 @@ region rising above the control; a camera shake, zoom or whole-body turn
 lifts both. The pre-shot median and 95th percentile of the region series are
 the comparison for anything seen in the final second.
 
-## 6. What was not done
+## 6. Sharpness and the encoder's keyframes
+
+The brief's author noticed the tucked fingers under the blue-shirt man's arm
+going fuzzy and then re-pixelating just before Kirk moves. `fingers_sharpness_k3.json`
+records, for every frame of 7.mp4 from 700 to 790, the Laplacian variance
+(sharpness) of the finger patch and of a background patch, the mean absolute
+frame-to-frame change in the finger patch and in the zone under the left arm,
+and the encoder's frame type from ffprobe. 7.mp4 has an I-frame every 28 frames
+without exception; frame 756, 100 ms before Kirk moves, is one. The finger
+patch's sharpness jump at 756 (1.39x the three frames before) is within the
+range of the other keyframes (0.96-1.59x) and the background jumps with it,
+while the frame-to-frame change in the patch stays at its noise floor until
+Kirk's hand crosses it at +0.23 s. The pixelation is the codec's cycle. It
+neither shows nor excludes a squeeze of the hidden right hand.
+
+Hand anatomy, from the 9x crops: the left forearm is underneath and the right
+forearm on top; the fingers visible under his right upper arm are the left
+hand's; the right hand is tucked under the left upper arm on Kirk's side and is
+never in view from either camera.
+
+## 7. What was not done
 
 - No blinded rating by independent reviewers.
 - No other camera angle of the plaid-shirt man's hands.

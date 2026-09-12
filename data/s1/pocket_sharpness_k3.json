@@ -1,0 +1,926 @@
+[
+ {
+  "frame": 728,
+  "t": -1.033,
+  "type": "I",
+  "pocket": [
+   1120.0,
+   1.04
+  ],
+  "strap/shoulder": [
+   502.0,
+   1.16
+  ],
+  "background left": [
+   1145.0,
+   1.05
+  ],
+  "lower torso": [
+   441.0,
+   0.89
+  ]
+ },
+ {
+  "frame": 729,
+  "t": -1.0,
+  "type": "B",
+  "pocket": [
+   928.0,
+   1.06
+  ],
+  "strap/shoulder": [
+   376.0,
+   1.15
+  ],
+  "background left": [
+   916.0,
+   1.07
+  ],
+  "lower torso": [
+   416.0,
+   0.84
+  ]
+ },
+ {
+  "frame": 730,
+  "t": -0.967,
+  "type": "B",
+  "pocket": [
+   911.0,
+   0.81
+  ],
+  "strap/shoulder": [
+   357.0,
+   1.01
+  ],
+  "background left": [
+   908.0,
+   0.9
+  ],
+  "lower torso": [
+   385.0,
+   1.02
+  ]
+ },
+ {
+  "frame": 731,
+  "t": -0.933,
+  "type": "B",
+  "pocket": [
+   884.0,
+   0.91
+  ],
+  "strap/shoulder": [
+   306.0,
+   1.08
+  ],
+  "background left": [
+   861.0,
+   0.92
+  ],
+  "lower torso": [
+   388.0,
+   1.01
+  ]
+ },
+ {
+  "frame": 732,
+  "t": -0.9,
+  "type": "P",
+  "pocket": [
+   1027.0,
+   0.96
+  ],
+  "strap/shoulder": [
+   427.0,
+   1.1
+  ],
+  "background left": [
+   1041.0,
+   0.85
+  ],
+  "lower torso": [
+   486.0,
+   0.92
+  ]
+ },
+ {
+  "frame": 733,
+  "t": -0.867,
+  "type": "B",
+  "pocket": [
+   785.0,
+   1.02
+  ],
+  "strap/shoulder": [
+   301.0,
+   1.09
+  ],
+  "background left": [
+   855.0,
+   0.89
+  ],
+  "lower torso": [
+   372.0,
+   0.92
+  ]
+ },
+ {
+  "frame": 734,
+  "t": -0.833,
+  "type": "B",
+  "pocket": [
+   901.0,
+   0.83
+  ],
+  "strap/shoulder": [
+   316.0,
+   1.06
+  ],
+  "background left": [
+   911.0,
+   0.88
+  ],
+  "lower torso": [
+   400.0,
+   0.95
+  ]
+ },
+ {
+  "frame": 735,
+  "t": -0.8,
+  "type": "B",
+  "pocket": [
+   881.0,
+   0.91
+  ],
+  "strap/shoulder": [
+   314.0,
+   1.06
+  ],
+  "background left": [
+   893.0,
+   0.88
+  ],
+  "lower torso": [
+   473.0,
+   0.91
+  ]
+ },
+ {
+  "frame": 736,
+  "t": -0.767,
+  "type": "P",
+  "pocket": [
+   1070.0,
+   0.93
+  ],
+  "strap/shoulder": [
+   428.0,
+   1.03
+  ],
+  "background left": [
+   1004.0,
+   0.86
+  ],
+  "lower torso": [
+   469.0,
+   0.86
+  ]
+ },
+ {
+  "frame": 737,
+  "t": -0.733,
+  "type": "B",
+  "pocket": [
+   811.0,
+   1.09
+  ],
+  "strap/shoulder": [
+   281.0,
+   0.99
+  ],
+  "background left": [
+   751.0,
+   0.97
+  ],
+  "lower torso": [
+   447.0,
+   0.85
+  ]
+ },
+ {
+  "frame": 738,
+  "t": -0.7,
+  "type": "B",
+  "pocket": [
+   1014.0,
+   0.87
+  ],
+  "strap/shoulder": [
+   338.0,
+   1.08
+  ],
+  "background left": [
+   927.0,
+   0.91
+  ],
+  "lower torso": [
+   446.0,
+   0.92
+  ]
+ },
+ {
+  "frame": 739,
+  "t": -0.667,
+  "type": "B",
+  "pocket": [
+   947.0,
+   1.03
+  ],
+  "strap/shoulder": [
+   306.0,
+   1.12
+  ],
+  "background left": [
+   848.0,
+   0.91
+  ],
+  "lower torso": [
+   374.0,
+   0.9
+  ]
+ },
+ {
+  "frame": 740,
+  "t": -0.633,
+  "type": "P",
+  "pocket": [
+   1077.0,
+   1.0
+  ],
+  "strap/shoulder": [
+   388.0,
+   1.27
+  ],
+  "background left": [
+   994.0,
+   1.04
+  ],
+  "lower torso": [
+   529.0,
+   0.87
+  ]
+ },
+ {
+  "frame": 741,
+  "t": -0.6,
+  "type": "B",
+  "pocket": [
+   916.0,
+   1.09
+  ],
+  "strap/shoulder": [
+   249.0,
+   1.02
+  ],
+  "background left": [
+   822.0,
+   1.0
+  ],
+  "lower torso": [
+   377.0,
+   0.87
+  ]
+ },
+ {
+  "frame": 742,
+  "t": -0.567,
+  "type": "B",
+  "pocket": [
+   957.0,
+   0.82
+  ],
+  "strap/shoulder": [
+   295.0,
+   0.98
+  ],
+  "background left": [
+   858.0,
+   0.92
+  ],
+  "lower torso": [
+   409.0,
+   0.92
+  ]
+ },
+ {
+  "frame": 743,
+  "t": -0.533,
+  "type": "B",
+  "pocket": [
+   895.0,
+   0.84
+  ],
+  "strap/shoulder": [
+   248.0,
+   0.82
+  ],
+  "background left": [
+   834.0,
+   0.93
+  ],
+  "lower torso": [
+   416.0,
+   1.01
+  ]
+ },
+ {
+  "frame": 744,
+  "t": -0.5,
+  "type": "P",
+  "pocket": [
+   962.0,
+   0.9
+  ],
+  "strap/shoulder": [
+   305.0,
+   0.85
+  ],
+  "background left": [
+   993.0,
+   0.95
+  ],
+  "lower torso": [
+   588.0,
+   1.03
+  ]
+ },
+ {
+  "frame": 745,
+  "t": -0.467,
+  "type": "B",
+  "pocket": [
+   886.0,
+   0.86
+  ],
+  "strap/shoulder": [
+   260.0,
+   0.91
+  ],
+  "background left": [
+   910.0,
+   0.92
+  ],
+  "lower torso": [
+   489.0,
+   1.0
+  ]
+ },
+ {
+  "frame": 746,
+  "t": -0.433,
+  "type": "B",
+  "pocket": [
+   880.0,
+   0.82
+  ],
+  "strap/shoulder": [
+   262.0,
+   0.89
+  ],
+  "background left": [
+   959.0,
+   0.91
+  ],
+  "lower torso": [
+   500.0,
+   1.05
+  ]
+ },
+ {
+  "frame": 747,
+  "t": -0.4,
+  "type": "B",
+  "pocket": [
+   739.0,
+   0.82
+  ],
+  "strap/shoulder": [
+   250.0,
+   0.82
+  ],
+  "background left": [
+   897.0,
+   0.92
+  ],
+  "lower torso": [
+   458.0,
+   1.05
+  ]
+ },
+ {
+  "frame": 748,
+  "t": -0.367,
+  "type": "P",
+  "pocket": [
+   1082.0,
+   0.9
+  ],
+  "strap/shoulder": [
+   313.0,
+   0.8
+  ],
+  "background left": [
+   1054.0,
+   0.95
+  ],
+  "lower torso": [
+   395.0,
+   1.18
+  ]
+ },
+ {
+  "frame": 749,
+  "t": -0.333,
+  "type": "B",
+  "pocket": [
+   926.0,
+   0.95
+  ],
+  "strap/shoulder": [
+   239.0,
+   0.83
+  ],
+  "background left": [
+   842.0,
+   0.99
+  ],
+  "lower torso": [
+   216.0,
+   1.42
+  ]
+ },
+ {
+  "frame": 750,
+  "t": -0.3,
+  "type": "B",
+  "pocket": [
+   944.0,
+   0.76
+  ],
+  "strap/shoulder": [
+   305.0,
+   0.87
+  ],
+  "background left": [
+   1000.0,
+   1.07
+  ],
+  "lower torso": [
+   310.0,
+   1.03
+  ]
+ },
+ {
+  "frame": 751,
+  "t": -0.267,
+  "type": "B",
+  "pocket": [
+   717.0,
+   0.77
+  ],
+  "strap/shoulder": [
+   289.0,
+   0.87
+  ],
+  "background left": [
+   863.0,
+   1.07
+  ],
+  "lower torso": [
+   268.0,
+   1.13
+  ]
+ },
+ {
+  "frame": 752,
+  "t": -0.233,
+  "type": "P",
+  "pocket": [
+   1037.0,
+   0.79
+  ],
+  "strap/shoulder": [
+   353.0,
+   0.85
+  ],
+  "background left": [
+   1193.0,
+   1.07
+  ],
+  "lower torso": [
+   416.0,
+   1.15
+  ]
+ },
+ {
+  "frame": 753,
+  "t": -0.2,
+  "type": "B",
+  "pocket": [
+   835.0,
+   0.88
+  ],
+  "strap/shoulder": [
+   268.0,
+   0.85
+  ],
+  "background left": [
+   961.0,
+   1.09
+  ],
+  "lower torso": [
+   341.0,
+   1.18
+  ]
+ },
+ {
+  "frame": 754,
+  "t": -0.167,
+  "type": "B",
+  "pocket": [
+   857.0,
+   0.91
+  ],
+  "strap/shoulder": [
+   269.0,
+   0.89
+  ],
+  "background left": [
+   987.0,
+   1.11
+  ],
+  "lower torso": [
+   381.0,
+   1.21
+  ]
+ },
+ {
+  "frame": 755,
+  "t": -0.133,
+  "type": "B",
+  "pocket": [
+   822.0,
+   0.91
+  ],
+  "strap/shoulder": [
+   245.0,
+   0.87
+  ],
+  "background left": [
+   897.0,
+   1.13
+  ],
+  "lower torso": [
+   408.0,
+   1.18
+  ]
+ },
+ {
+  "frame": 756,
+  "t": -0.1,
+  "type": "I",
+  "pocket": [
+   1169.0,
+   0.95
+  ],
+  "strap/shoulder": [
+   312.0,
+   0.86
+  ],
+  "background left": [
+   1050.0,
+   1.15
+  ],
+  "lower torso": [
+   487.0,
+   0.99
+  ]
+ },
+ {
+  "frame": 757,
+  "t": -0.067,
+  "type": "B",
+  "pocket": [
+   1031.0,
+   0.97
+  ],
+  "strap/shoulder": [
+   263.0,
+   0.86
+  ],
+  "background left": [
+   869.0,
+   1.24
+  ],
+  "lower torso": [
+   372.0,
+   1.05
+  ]
+ },
+ {
+  "frame": 758,
+  "t": -0.033,
+  "type": "B",
+  "pocket": [
+   954.0,
+   0.97
+  ],
+  "strap/shoulder": [
+   271.0,
+   0.91
+  ],
+  "background left": [
+   878.0,
+   1.26
+  ],
+  "lower torso": [
+   471.0,
+   1.07
+  ]
+ },
+ {
+  "frame": 759,
+  "t": 0.0,
+  "type": "B",
+  "pocket": [
+   866.0,
+   0.94
+  ],
+  "strap/shoulder": [
+   246.0,
+   0.78
+  ],
+  "background left": [
+   876.0,
+   1.3
+  ],
+  "lower torso": [
+   428.0,
+   0.89
+  ]
+ },
+ {
+  "frame": 760,
+  "t": 0.033,
+  "type": "P",
+  "pocket": [
+   1085.0,
+   0.87
+  ],
+  "strap/shoulder": [
+   401.0,
+   0.96
+  ],
+  "background left": [
+   1115.0,
+   1.31
+  ],
+  "lower torso": [
+   558.0,
+   1.02
+  ]
+ },
+ {
+  "frame": 761,
+  "t": 0.067,
+  "type": "B",
+  "pocket": [
+   791.0,
+   0.85
+  ],
+  "strap/shoulder": [
+   304.0,
+   1.02
+  ],
+  "background left": [
+   844.0,
+   1.27
+  ],
+  "lower torso": [
+   420.0,
+   1.06
+  ]
+ },
+ {
+  "frame": 762,
+  "t": 0.1,
+  "type": "B",
+  "pocket": [
+   951.0,
+   0.77
+  ],
+  "strap/shoulder": [
+   413.0,
+   0.92
+  ],
+  "background left": [
+   870.0,
+   1.08
+  ],
+  "lower torso": [
+   395.0,
+   1.11
+  ]
+ },
+ {
+  "frame": 763,
+  "t": 0.133,
+  "type": "B",
+  "pocket": [
+   890.0,
+   0.75
+  ],
+  "strap/shoulder": [
+   314.0,
+   1.06
+  ],
+  "background left": [
+   849.0,
+   1.08
+  ],
+  "lower torso": [
+   266.0,
+   1.07
+  ]
+ },
+ {
+  "frame": 764,
+  "t": 0.167,
+  "type": "P",
+  "pocket": [
+   1119.0,
+   0.71
+  ],
+  "strap/shoulder": [
+   371.0,
+   1.04
+  ],
+  "background left": [
+   1118.0,
+   0.87
+  ],
+  "lower torso": [
+   277.0,
+   0.82
+  ]
+ },
+ {
+  "frame": 765,
+  "t": 0.2,
+  "type": "B",
+  "pocket": [
+   931.0,
+   0.74
+  ],
+  "strap/shoulder": [
+   330.0,
+   0.97
+  ],
+  "background left": [
+   788.0,
+   0.81
+  ],
+  "lower torso": [
+   380.0,
+   1.18
+  ]
+ },
+ {
+  "frame": 766,
+  "t": 0.233,
+  "type": "B",
+  "pocket": [
+   884.0,
+   0.72
+  ],
+  "strap/shoulder": [
+   305.0,
+   0.87
+  ],
+  "background left": [
+   756.0,
+   1.01
+  ],
+  "lower torso": [
+   326.0,
+   0.87
+  ]
+ },
+ {
+  "frame": 767,
+  "t": 0.267,
+  "type": "B",
+  "pocket": [
+   724.0,
+   0.79
+  ],
+  "strap/shoulder": [
+   286.0,
+   0.96
+  ],
+  "background left": [
+   725.0,
+   0.92
+  ],
+  "lower torso": [
+   278.0,
+   0.97
+  ]
+ },
+ {
+  "frame": 768,
+  "t": 0.3,
+  "type": "P",
+  "pocket": [
+   877.0,
+   0.75
+  ],
+  "strap/shoulder": [
+   446.0,
+   0.98
+  ],
+  "background left": [
+   973.0,
+   0.75
+  ],
+  "lower torso": [
+   436.0,
+   1.19
+  ]
+ },
+ {
+  "frame": 769,
+  "t": 0.333,
+  "type": "B",
+  "pocket": [
+   729.0,
+   0.96
+  ],
+  "strap/shoulder": [
+   229.0,
+   0.8
+  ],
+  "background left": [
+   831.0,
+   0.84
+  ],
+  "lower torso": [
+   288.0,
+   1.15
+  ]
+ },
+ {
+  "frame": 770,
+  "t": 0.367,
+  "type": "B",
+  "pocket": [
+   652.0,
+   1.02
+  ],
+  "strap/shoulder": [
+   258.0,
+   0.75
+  ],
+  "background left": [
+   773.0,
+   0.79
+  ],
+  "lower torso": [
+   377.0,
+   1.06
+  ]
+ },
+ {
+  "frame": 771,
+  "t": 0.4,
+  "type": "B",
+  "pocket": [
+   417.0,
+   0.74
+  ],
+  "strap/shoulder": [
+   194.0,
+   0.66
+  ],
+  "background left": [
+   893.0,
+   0.67
+  ],
+  "lower torso": [
+   414.0,
+   0.99
+  ]
+ }
+]
